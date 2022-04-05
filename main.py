@@ -12,6 +12,30 @@ class NaoPodeJogarContraSi(Restricao):
         if self.time in atribuicao:
             return self.time != atribuicao[self.time]
         return True
+    
+class UmJogoPorRodada(Restricao):
+    def __init__(self, partidasTime, rodada):
+        super().__init__(partidasTime)
+        self.partidasTime = partidasTime
+        self.rodada = rodada
+
+    def esta_satisfeita(self, atribuicao: dict):
+        for partida in self.partidasTime:
+            if partida in atribuicao and atribuicao[partida] == self.rodada:
+                return False 
+        return True
+
+class NaoPodeNaMesmaRodada(Restricao):
+    def __init__(self, partida1, partida2):
+        super().__init__([partida1, partida2])
+        self.partida1 = partida1
+        self.partida2 = partida2
+
+    def esta_satisfeita(self, atribuicao: dict):
+        if self.partida1 in atribuicao and self.partida2 in atribuicao:
+            return atribuicao[self.partida1] != atribuicao[self.partida2]
+        return True
+
 
 class NaoPodeJogarMaisDeUmaVez(Restricao):
     def __init__(self, time):
@@ -72,6 +96,24 @@ times = [
     "SE Escondidos",
     "Secretos FC"
 ]
+
+time_cidade = {
+    "Campos FC" : "Campos", 
+    "Guardiões FC" : "Guardião",
+    "CA Protetores" : "Guardião",
+    "SE Leões" : "Leão",
+    "Simba EC" : "Leão",
+    "SE Granada" : "Granada",
+    "CA Lagos" : "Lagos",
+    "Solaris EC" : "Ponte-do-Sol",
+    "Porto FC" : "Porto",
+    "Ferroviária EC" : "Porto",
+    "Portuários AA" : "Porto",
+    "CA Azedos" : "Limões",
+    "SE Escondidos" : "Escondidos",
+    "Secretos FC" : "Escondidos"
+}
+
 
 cidades = [
     "Campos",
@@ -137,12 +179,58 @@ def gerar_partidas_em_cidades(partidas: array):
     dominios = {}
     for variavel in variaveis:
         dominios[variavel] = partidas
-    
-if __name__ == "__main__":
-    classicos = gerar_classicos()
+
+def gerar_partidas_possiveis():
     partidas = []
-    for i in range(10):
-        partidas.append(gerar_partidas(classicos))
-    partidas_cidades = gerar_partidas_em_cidades(partidas)
+    for time1 in times:
+        for time2 in times:
+            if time1 != time2:
+                cidade_time_casa = time_cidade[time1]
+                tupla_partidas = tuple((time1, time2, cidade_time_casa))
+                partidas.append(tupla_partidas)
+    return partidas
+
+def nao_pode_na_mesma_rodada(partida1, partida2):
+    TIME_1 = 0
+    TIME_2 = 1
+    CIDADE = 2
+    # if (partida1[TIME_1] == partida2[TIME_1] or partida1[TIME_1] == partida2[TIME_2]):
+    #     return True
+    
+    if (partida1[CIDADE] == partida2[CIDADE]):
+        return True
+
+    # if (partida1[TIME_1] in maiores_time and partida1[TIME_2] in maiores_time and partida2[TIME_1] in maiores_time and partida2[TIME_2] in maiores_time):
+    #         return True
+
+    return False
+
+if __name__ == "__main__":
+    qntdJogosUmaRodadas = (int)(len(times) / 2)
+    qntdRodadasCmapeonato = (int)( ( (len(times) - 1) * len(times) ) / qntdJogosUmaRodadas )
+    variaveis = gerar_partidas_possiveis()
+    rodadas = []
+    
+    for i in range(1, (qntdRodadasCmapeonato + 1)):
+        rodadas.append(i)
+    dominios = {}
+
+    for variavel in variaveis:
+        dominios[variavel] = rodadas
+
+    problema = SatisfacaoRestricoes(variaveis, dominios)
+    
+    # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
+    for variavel1 in variaveis:
+        for variavel2 in variaveis:
+            if variavel1 != variavel2 and nao_pode_na_mesma_rodada(variavel1, variavel2):
+                problema.adicionar_restricao(NaoPodeNaMesmaRodada(variavel1, variavel2))
+    
+
+    resposta = problema.busca_backtracking()
+    if resposta is None:
+        print("Nenhuma resposta encontrada")
+    else:
+        print(resposta) 
     
     
