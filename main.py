@@ -194,11 +194,11 @@ def nao_pode_na_mesma_rodada(partida1, partida2):
     TIME_1 = 0
     TIME_2 = 1
     CIDADE = 2
-    # if (partida1[TIME_1] == partida2[TIME_1] or partida1[TIME_1] == partida2[TIME_2]):
-    #     return True
-    
-    if (partida1[CIDADE] == partida2[CIDADE]):
+    if (partida1[TIME_1] == partida2[TIME_1] or partida1[TIME_1] == partida2[TIME_2] or partida1[TIME_2] == partida2[TIME_2]):
         return True
+    
+    # if (partida1[CIDADE] == partida2[CIDADE]):
+    #     return True
 
     # if (partida1[TIME_1] in maiores_time and partida1[TIME_2] in maiores_time and partida2[TIME_1] in maiores_time and partida2[TIME_2] in maiores_time):
     #         return True
@@ -231,6 +231,14 @@ if __name__ == "__main__":
     if resposta is None:
         print("Nenhuma resposta encontrada")
     else:
-        print(resposta) 
+        tabela = []
+        for i in range(qntdRodadasCmapeonato):
+            tabela.append("Rodada " + (str)(i + 1))
+        for partida in variaveis:
+            rodada = resposta[partida]
+            tabela[rodada - 1] +=  '\n' + (str)(partida)
+        for rodada in tabela:
+            print(rodada + '\n\n')
+
     
     
