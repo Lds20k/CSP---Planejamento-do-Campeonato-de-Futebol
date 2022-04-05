@@ -190,18 +190,19 @@ def gerar_partidas_possiveis():
                 partidas.append(tupla_partidas)
     return partidas
 
-def nao_pode_na_mesma_rodada(partida1, partida2):
+def nao_pode_na_mesma_rodada(partida1, partida2, listaPartidasRestricoes):
     TIME_1 = 0
     TIME_2 = 1
     CIDADE = 2
+
     if (partida1[TIME_1] == partida2[TIME_1] or partida1[TIME_1] == partida2[TIME_2] or partida1[TIME_2] == partida2[TIME_2]):
         return True
     
-    # if (partida1[CIDADE] == partida2[CIDADE]):
-    #     return True
+    if (partida1[CIDADE] == partida2[CIDADE]):
+        return True
 
-    # if (partida1[TIME_1] in maiores_time and partida1[TIME_2] in maiores_time and partida2[TIME_1] in maiores_time and partida2[TIME_2] in maiores_time):
-    #         return True
+    if (partida1[TIME_1] in maiores_time and partida1[TIME_2] in maiores_time and partida2[TIME_1] in maiores_time and partida2[TIME_2] in maiores_time):
+            return True
 
     return False
 
@@ -220,12 +221,22 @@ if __name__ == "__main__":
 
     problema = SatisfacaoRestricoes(variaveis, dominios)
     
+    contN = 0
+    contF = 0
+    listaPartidasRestricoes = []
     # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
     for variavel1 in variaveis:
         for variavel2 in variaveis:
-            if variavel1 != variavel2 and nao_pode_na_mesma_rodada(variavel1, variavel2):
+            CONJUNTO_PARTIDA = tuple((variavel1, variavel2))
+            if variavel1 != variavel2 and CONJUNTO_PARTIDA not in listaPartidasRestricoes and nao_pode_na_mesma_rodada(variavel1, variavel2, listaPartidasRestricoes):
+                contF += 1
+                listaPartidasRestricoes.append(tuple((variavel2, variavel1)))
                 problema.adicionar_restricao(NaoPodeNaMesmaRodada(variavel1, variavel2))
-    
+            else:
+                contN += 1      
+    print(contN)
+    print(contF)
+    print(contF + contN)
 
     resposta = problema.busca_backtracking()
     if resposta is None:
@@ -236,7 +247,7 @@ if __name__ == "__main__":
             tabela.append("Rodada " + (str)(i + 1))
         for partida in variaveis:
             rodada = resposta[partida]
-            tabela[rodada - 1] +=  '\n' + (str)(partida)
+            tabela[rodada - 1] +=  '\n' + (str)(partida[0]) + (str)(partida[1]) + ' - ' + (str)(partida[2])
         for rodada in tabela:
             print(rodada + '\n\n')
 
