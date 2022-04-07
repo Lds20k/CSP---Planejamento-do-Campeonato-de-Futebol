@@ -1,17 +1,29 @@
 from array import array
-from itertools import product
+from itertools import permutations, product
 from random import shuffle
+from typing import Counter
 from satisfacao_restricoes import Restricao, SatisfacaoRestricoes
 
-class NaoPodeJogarContraSi(Restricao):
-    def __init__(self, partida):
-        super().__init__([partida])
+# class NaoPodeJogarContraSi(Restricao):
+#     def __init__(self, partida):
+#         super().__init__([partida])
 
-    def esta_satisfeita(self, atribuicao: dict):
-        for it in atribuicao:
-            if atribuicao[it][0] == atribuicao[it][1]:
-                return False
-        return True
+#     def esta_satisfeita(self, atribuicao: dict):
+#         for it in atribuicao:
+#             if atribuicao[it][0] == atribuicao[it][1]:
+#                 return False
+#         return True
+
+# class TodosJogamContraTodos(Restricao):
+#     def __init__(self, time, partidas_existentes):
+#         super().__init__([time])
+#         self.partidas_existentes = partidas_existentes
+
+#     def esta_satisfeita(self, atribuicao: dict):
+#         for it in atribuicao:
+#             if(atribuicao[it] in self.partidas_existentes):
+#                 return False
+#         return True
 
 class NaoPodeJogarMaisDeUmaVez(Restricao):
     def __init__(self, time):
@@ -20,20 +32,9 @@ class NaoPodeJogarMaisDeUmaVez(Restricao):
     def esta_satisfeita(self, atribuicao: dict):
         times = []
         for it in list(atribuicao.values()):
-            times.extend(list(it))
-        
+            times.extend(list([it[0], it[1]]))
+
         return len(set(times)) == len(times)
-
-class TodosJogamContraTodos(Restricao):
-    def __init__(self, time, partidas_existentes):
-        super().__init__([time])
-        self.partidas_existentes = partidas_existentes
-
-    def esta_satisfeita(self, atribuicao: dict):
-        for it in atribuicao:
-            if(atribuicao[it] in self.partidas_existentes):
-                return False
-        return True
 
 class SoPodeUmClassico(Restricao):
     def __init__(self, time, classicos):
@@ -42,12 +43,20 @@ class SoPodeUmClassico(Restricao):
 
     def esta_satisfeita(self, atribuicao: dict):
         i = 0
-        for it in atribuicao:
-            if(atribuicao[it] in self.classicos):
+        for it in atribuicao.values():
+            if(it in self.classicos):
                 i += 1
                 if i > 1:
                     return False
         return True
+
+class NaoUsarRodadaSemResposta(Restricao):
+    def __init__(self, time, sem_resposta):
+        super().__init__([time])
+        self.sem_resposta = sem_resposta
+
+    def esta_satisfeita(self, atribuicao: dict):
+        return not Counter(atribuicao) in self.sem_resposta
 
 class SoPodeJogarUmaPartidaNaCidade(Restricao):
     def __init__(self, partida):
@@ -55,34 +64,21 @@ class SoPodeJogarUmaPartidaNaCidade(Restricao):
         self.partida = partida
 
     def esta_satisfeita(self, atribuicao: dict):
-        return len(set(atribuicao.values())) == len(atribuicao.values())
+        cidades = []
+        for it in list(atribuicao.values()):
+            cidades.extend(list([it[2]]))
+        
+        return len(set(cidades)) == len(cidades)
 
-maiores_time = [
-    "SE Escondidos",
-    "Porto FC",
-    "SE Leões",
-    "Guardiões FC",
-    "Ferroviária EC"
-]
+maiores_times_cidades = {
+    "SE Escondidos": "Escondidos",
+    "Porto FC": "Porto",
+    "SE Leoes": "Leao",
+    "Guardioes FC": "Guardiao",
+    "Ferroviaria EC": "Porto"
+}
 
-times = [
-    "Campos FC",
-    "Guardioes FC",
-    "CA Protetores",
-    "SE Leoes",
-    "Simba EC",
-    "SE Granada",
-    "CA Lagos",
-    "Solaris EC",
-    "Porto FC",
-    "Ferroviaria EC",
-    "Portuarios AA",
-    "CA Azedos",
-    "SE Escondidos",
-    "Secretos FC"
-]
-
-time_cidade = {
+times_cidades = {
     "Campos FC": "Campos",
     "Guardioes FC": "Guardiao",
     "CA Protetores": "Guardiao",
@@ -99,48 +95,8 @@ time_cidade = {
     "Secretos FC": "Escondidos"
 }
 
-def gerar_classicos():
-    classicos = []
-    for time in maiores_time:
-        m_time = maiores_time.copy()
-        m_time.remove(time)
-
-        partida = list(product(*[[time], m_time]))
-        classicos = classicos + partida
-
-    return classicos
-
-
-# def gerar_partida(times, classicos, partidas_existentes):
-#     qtd_partida = int(len(times)/2)
-#     variaveis = times[:qtd_partida].copy()
-
-#     dominios = {}
-#     for variavel in variaveis:
-#         dominios[variavel] = times.copy()
-    
-#     problema = SatisfacaoRestricoes(variaveis, dominios)
-
-#     for time in variaveis:
-#         # Um time não pode jogar contra sí
-#         problema.adicionar_restricao(NaoPodeJogarContraSi(time))
-
-#         # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
-#         problema.adicionar_restricao(TodosJogamContraTodos(time, partidas_existentes))
-
-#         # Um time não pode jogar mais de uma vez por rodada
-#         problema.adicionar_restricao(NaoPodeJogarMaisDeUmaVez(time))
-
-#         # Clássicos (qualquer jogos entre os 5 maiores times) não podem acontecer na mesma rodada por competição com a TV
-#         problema.adicionar_restricao(SoPodeUmClassico(time, classicos))
-
-#     resposta = problema.busca_backtracking()
-#     if resposta is None:
-#         print("Nenhuma resposta encontrada")
-#     return resposta
-
-def gerar_rodada(partidas, classicos):
-    qtd_partida = int(len(times)/2)
+def gerar_rodada(partidas, classicos, sem_resposta: list):
+    qtd_partida = int(len(times_cidades)/2)
     variaveis = list(range(1, qtd_partida+1))
 
     dominios = {}
@@ -151,7 +107,7 @@ def gerar_rodada(partidas, classicos):
 
     for partida in variaveis:
         # Um time não pode jogar contra sí
-        problema.adicionar_restricao(NaoPodeJogarContraSi(partida))
+        #problema.adicionar_restricao(NaoPodeJogarContraSi(partida))
 
         # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
         #problema.adicionar_restricao(TodosJogamContraTodos(partida, partidas_existentes))
@@ -162,35 +118,88 @@ def gerar_rodada(partidas, classicos):
         # Clássicos (qualquer jogos entre os 5 maiores times) não podem acontecer na mesma rodada por competição com a TV
         problema.adicionar_restricao(SoPodeUmClassico(partida, classicos))
 
+        if len(sem_resposta):
+            # Não pode usar rodada sem resposta
+            problema.adicionar_restricao(NaoUsarRodadaSemResposta(partida, sem_resposta))
+
+        # So pode jogar Uma partida na cidade
+        # problema.adicionar_restricao(SoPodeJogarUmaPartidaNaCidade(partida))
+
     resposta = problema.busca_backtracking()
     if resposta is None:
         print("Nenhuma resposta encontrada")
+    else:
+        print("Resposta encontrada")
     return resposta
-    
-if __name__ == "__main__":
-    classicos = gerar_classicos()
-    rodadas = []
-    partidas_existentes = []
 
-    # partidas = []
-    # for time in time_cidade:
-    #     partidas = partidas + list(tuple(product([time], times)))
+def associar_cidade(partidas):
+    qtd_partida = int(len(times_cidades)/2)
+    variaveis = list(range(1, qtd_partida+1))
+
+    dominios = {}
+    for variavel in variaveis:
+        dominios[variavel] = partidas.copy()
     
-    todas_partidas = []
-    for time in time_cidade:
-        partidas = list(tuple(product([time], times)))
-        partida_cidade = []
-        for partida in partidas:
-            partida_temp = tuple(list(list(partida) + [time_cidade[time]]))
-            partida_cidade.extend([partida_temp])
-        todas_partidas = partida_cidade + todas_partidas
+    problema = SatisfacaoRestricoes(variaveis, dominios)
+
+    for partida in variaveis:
+        # Um time não pode jogar contra sí
+        #problema.adicionar_restricao(NaoPodeJogarContraSi(partida))
+
+        # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
+        #problema.adicionar_restricao(TodosJogamContraTodos(partida, partidas_existentes))
+
+        # Um time não pode jogar mais de uma vez por rodada
+        problema.adicionar_restricao(NaoPodeJogarMaisDeUmaVez(partida))
+        
+        # Clássicos (qualquer jogos entre os 5 maiores times) não podem acontecer na mesma rodada por competição com a TV
+        problema.adicionar_restricao(SoPodeUmClassico(partida, classicos))
+
+        # So pode jogar Uma partida na cidade
+        # problema.adicionar_restricao(SoPodeJogarUmaPartidaNaCidade(partida))
+
+    resposta = problema.busca_backtracking()
+    if resposta is None:
+        print("Nenhuma resposta encontrada")
+    else:
+        print("Resposta encontrada")
+    return resposta
+
+def gerar_partidas(times_cidades: dict):
+    partidas = list(permutations(times_cidades.keys(), 2))
+    # times_partidas_cidades = dict()
+    # times_partidas = list(permutations(times_cidades.keys(), 2))
+    # for partida in times_partidas:
+    #     times_partidas_cidades[partida] = times_cidades[partida[0]]
+    #     partidas.append(times_partidas_cidades)
+    return partidas
+
+if __name__ == "__main__":
+    classicos = gerar_partidas(maiores_times_cidades)
+    partidas = gerar_partidas(times_cidades)
+    rodadas = []
 
     print("Gerando rodadas...")
-    #shuffle(todas_partidas)    
-    for i in range(int(len(times)-1)*2):
-        rodada = gerar_rodada(todas_partidas, classicos)
+    shuffle(partidas)
+    sem_final_definido = []
+    while len(rodadas) < int(len(times_cidades) - 1) * 2:
+        rodada = gerar_rodada(partidas, classicos, sem_final_definido)
+        if rodada == None:
+            rodada_removida = rodadas.pop()
+            sem_final_definido.append(Counter(rodada_removida))
+            for partida in rodada_removida.values():
+                partidas.append(partida)
+            exit()
+        else:
+            sem_final_definido.clear()
+            for partida in rodada:
+                partidas.remove(rodada[partida])
+            rodadas.append(rodada)
+    
+    for i in rodadas:
+        rodada = associar_cidade(partidas)
         for partida in rodada:
-            todas_partidas.remove(rodada[partida])
+            partidas.remove(rodada[partida])
         rodadas.append(rodada)
     
     print("{")
@@ -200,6 +209,5 @@ if __name__ == "__main__":
             print(f"    {partida}: {rodada[partida]},")
         print("  ],")
     print("}")
-    #partidas_cidades = gerar_partidas_em_cidades(partidas)
     
     
