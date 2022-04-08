@@ -36,6 +36,19 @@ class NaoPodeJogarMaisDeUmaVez(Restricao):
 
         return len(set(times)) == len(times)
 
+class NaoPodeJogosNaMesmaCidade(Restricao):
+    def __init__(self, time):
+        super().__init__([time])
+
+    def esta_satisfeita(self, atribuicao: dict):
+        cidades_da_casa = []
+        for it in list(atribuicao.values()):
+            if times_cidades[it[0]] in cidades_da_casa:
+                return False
+            cidades_da_casa.append(times_cidades[it[0]])
+
+        return True
+
 class SoPodeUmClassico(Restricao):
     def __init__(self, time, classicos):
         super().__init__([time])
@@ -82,7 +95,7 @@ maiores_times_cidades = {
     "Porto FC": "Porto",
     "SE Leoes": "Leao",
     "Guardioes FC": "Guardiao",
-    "Ferroviaria EC": "Porto"
+    "Ferroviaria EC": "Campos"
 }
 
 times_cidades = {
@@ -95,7 +108,7 @@ times_cidades = {
     "CA Lagos": "Lagos",
     "Solaris EC": "Ponte-do-Sol",
     "Porto FC": "Porto",
-    "Ferroviaria EC": "Porto",
+    "Ferroviaria EC": "Campos",
     "Portuarios AA": "Porto",
     "CA Azedos": "Limoes",
     "SE Escondidos": "Escondidos",
@@ -124,6 +137,8 @@ def gerar_rodada(partidas, classicos):
 
         # Clássicos (qualquer jogos entre os 5 maiores times) não podem acontecer na mesma rodada por competição com a TV
         problema.adicionar_restricao(SoPodeUmClassico(partida, classicos))
+
+        problema.adicionar_restricao(NaoPodeJogosNaMesmaCidade(partida))
 
         # So pode jogar Uma partida na cidade
         # problema.adicionar_restricao(SoPodeJogarUmaPartidaNaCidade(partida))
@@ -177,16 +192,18 @@ if __name__ == "__main__":
             rodadas.append(rodada)
     
     rodada_cidade = []
-    for i in rodadas:
-        rodada = associar_cidade(i)
-        rodada_cidade.append(rodada)
+    # for i in rodadas:
+    #     rodada = associar_cidade(i)
+    #     rodada_cidade.append(rodada)
     
-    print("{")
+    print()
+    i = 1
     for rodada in rodadas:
-        print("  [")
+        print(f"  Rodada {i}")
         for partida in rodada:
-            print(f"    {partida}: {rodada[partida]},")
-        print("  ],")
-    print("}")
+            print(f"    {partida} - {rodada[partida][0]} X {rodada[partida][1]} - {times_cidades[rodada[partida][0]]}")
+        print()
+        i += 1
+    print()
     
     
