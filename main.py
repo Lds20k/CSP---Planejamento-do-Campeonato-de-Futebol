@@ -65,7 +65,14 @@ class CidadeDoTimeOuAdversarioOuQualquerOutra(Restricao):
         self.partida = partida
 
     def esta_satisfeita(self, atribuicao: dict):
-        if list(atribuicao.values())[-1] != times_cidades[list(atribuicao.keys())[-1][0]]:
+        cidades = list(atribuicao.values())
+        times = list(atribuicao.keys())
+        if cidades.count(times_cidades[times[-1][0]]) < 1:
+            return False
+            
+        if cidades[-1] != times_cidades[times[-1][0]]:
+            if len(times) == int(len(times_cidades)/2) and cidades[-1] == times_cidades[times[-1][1]]:
+                return True
             return False
 
         return True
