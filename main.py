@@ -4,27 +4,6 @@ from random import shuffle
 from typing import Counter
 from satisfacao_restricoes import Restricao, SatisfacaoRestricoes
 
-# class NaoPodeJogarContraSi(Restricao):
-#     def __init__(self, partida):
-#         super().__init__([partida])
-
-#     def esta_satisfeita(self, atribuicao: dict):
-#         for it in atribuicao:
-#             if atribuicao[it][0] == atribuicao[it][1]:
-#                 return False
-#         return True
-
-# class TodosJogamContraTodos(Restricao):
-#     def __init__(self, time, partidas_existentes):
-#         super().__init__([time])
-#         self.partidas_existentes = partidas_existentes
-
-#     def esta_satisfeita(self, atribuicao: dict):
-#         for it in atribuicao:
-#             if(atribuicao[it] in self.partidas_existentes):
-#                 return False
-#         return True
-
 class NaoPodeJogarMaisDeUmaVez(Restricao):
     def __init__(self, time):
         super().__init__([time])
@@ -63,33 +42,6 @@ class SoPodeUmClassico(Restricao):
                     return False
         return True
 
-class SoPodeJogarUmaPartidaNaCidade(Restricao):
-    def __init__(self, partida):
-        super().__init__([partida])
-        self.partida = partida
-
-    def esta_satisfeita(self, atribuicao: dict):
-        cidades = list(atribuicao.values())
-        return len(set(cidades)) == len(cidades)
-
-class CidadeDoTimeOuAdversarioOuQualquerOutra(Restricao):
-    def __init__(self, partida):
-        super().__init__([partida])
-        self.partida = partida
-
-    def esta_satisfeita(self, atribuicao: dict):
-        cidades = list(atribuicao.values())
-        times = list(atribuicao.keys())
-        if cidades.count(times_cidades[times[-1][0]]) < 1:
-            return False
-            
-        if cidades[-1] != times_cidades[times[-1][0]]:
-            if len(times) == int(len(times_cidades)/2) and cidades[-1] == times_cidades[times[-1][1]]:
-                return True
-            return False
-
-        return True
-
 maiores_times_cidades = {
     "SE Escondidos": "Escondidos",
     "Porto FC": "Porto",
@@ -126,43 +78,14 @@ def gerar_rodada(partidas, classicos):
     problema = SatisfacaoRestricoes(variaveis, dominios)
 
     for partida in variaveis:
-        # Um time não pode jogar contra sí
-        #problema.adicionar_restricao(NaoPodeJogarContraSi(partida))
-
-        # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
-        #problema.adicionar_restricao(TodosJogamContraTodos(partida, partidas_existentes))
-
         # Um time não pode jogar mais de uma vez por rodada
         problema.adicionar_restricao(NaoPodeJogarMaisDeUmaVez(partida))
 
         # Clássicos (qualquer jogos entre os 5 maiores times) não podem acontecer na mesma rodada por competição com a TV
         problema.adicionar_restricao(SoPodeUmClassico(partida, classicos))
 
+        # nao poderá ter duas partidas com time 1 na mesma cidade na mesma rodada
         problema.adicionar_restricao(NaoPodeJogosNaMesmaCidade(partida))
-
-        # So pode jogar Uma partida na cidade
-        # problema.adicionar_restricao(SoPodeJogarUmaPartidaNaCidade(partida))
-
-    resposta = problema.busca_backtracking()
-    if resposta is None:
-        print("Nenhuma resposta encontrada")
-    return resposta
-
-def associar_cidade(partidas: dict):
-    variaveis = partidas.copy().values()
-
-    dominios = {}
-    for variavel in variaveis:
-        dominios[variavel] = list(set(times_cidades.copy().values()))
-    
-    problema = SatisfacaoRestricoes(variaveis, dominios)
-
-    for partida in variaveis:
-        # So pode jogar Uma partida na cidade
-        problema.adicionar_restricao(SoPodeJogarUmaPartidaNaCidade(partida))
-
-        # Cidade do time OU adversario OU qualquer outra
-        problema.adicionar_restricao(CidadeDoTimeOuAdversarioOuQualquerOutra(partida))
 
     resposta = problema.busca_backtracking()
     if resposta is None:
@@ -190,11 +113,6 @@ if __name__ == "__main__":
             for partida in rodada:
                 partidas_aux.remove(rodada[partida])
             rodadas.append(rodada)
-    
-    rodada_cidade = []
-    # for i in rodadas:
-    #     rodada = associar_cidade(i)
-    #     rodada_cidade.append(rodada)
     
     print()
     i = 1
