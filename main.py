@@ -107,7 +107,7 @@ time_cidade = {
     "CA Lagos" : "Lagos",
     "Solaris EC" : "Ponte-do-Sol",
     "Porto FC" : "Porto",
-    "Ferroviária EC" : "Porto",
+    "Ferroviária EC" : "Campos",
     "Portuários AA" : "Porto",
     "CA Azedos" : "Limões",
     "SE Escondidos" : "Escondidos",
@@ -217,23 +217,24 @@ if __name__ == "__main__":
     dominios = {}
 
     for variavel in variaveis:
-        dominios[variavel] = rodadas
+        dominios[variavel] = rodadas.copy()
+        dominios = shuffle(dominios)
 
-    problema = SatisfacaoRestricoes(variaveis, dominios)
+    problema = SatisfacaoRestricoes(variaveis, dominios, True)
     
     contN = 0
     contF = 0
     listaPartidasRestricoes = []
     # Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno
-    for variavel1 in variaveis:
-        for variavel2 in variaveis:
-            CONJUNTO_PARTIDA = tuple((variavel1, variavel2))
-            if variavel1 != variavel2 and CONJUNTO_PARTIDA not in listaPartidasRestricoes and nao_pode_na_mesma_rodada(variavel1, variavel2, listaPartidasRestricoes):
-                contF += 1
-                listaPartidasRestricoes.append(tuple((variavel2, variavel1)))
-                problema.adicionar_restricao(NaoPodeNaMesmaRodada(variavel1, variavel2))
-            else:
-                contN += 1      
+    # for variavel1 in variaveis:
+    #     for variavel2 in variaveis:
+    #         CONJUNTO_PARTIDA = tuple((variavel1, variavel2))
+    #         if variavel1 != variavel2 and CONJUNTO_PARTIDA not in listaPartidasRestricoes and nao_pode_na_mesma_rodada(variavel1, variavel2, listaPartidasRestricoes):
+    #             contF += 1
+    #             listaPartidasRestricoes.append(tuple((variavel2, variavel1)))
+    #             problema.adicionar_restricao(NaoPodeNaMesmaRodada(variavel1, variavel2))
+    #         else:
+    #             contN += 1      
     print(contN)
     print(contF)
     print(contF + contN)
