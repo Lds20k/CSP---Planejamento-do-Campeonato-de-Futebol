@@ -88,8 +88,6 @@ def gerar_rodada(partidas, classicos):
         problema.adicionar_restricao(NaoPodeJogosNaMesmaCidade(partida))
 
     resposta = problema.busca_backtracking()
-    # if resposta is None:
-        # print("Nenhuma resposta encontrada")
     return resposta
 
 def gerar_partidas(times_cidades: dict):
