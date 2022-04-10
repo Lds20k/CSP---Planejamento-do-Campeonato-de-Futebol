@@ -1,7 +1,5 @@
-from array import array
-from itertools import permutations, product
+from itertools import permutations
 from random import shuffle
-from typing import Counter
 from satisfacao_restricoes import Restricao, SatisfacaoRestricoes
 
 class NaoPodeJogarMaisDeUmaVez(Restricao):
@@ -20,11 +18,13 @@ class NaoPodeJogosNaMesmaCidade(Restricao):
         super().__init__([time])
 
     def esta_satisfeita(self, atribuicao: dict):
-        cidades_da_casa = []
+        cidade_casa = {}
         for it in list(atribuicao.values()):
-            if times_cidades[it[0]] in cidades_da_casa:
+            time_1 = it[0]
+            cidade_time_1 = times_cidades[time_1]
+            if cidade_casa.get(cidade_time_1) != None:
                 return False
-            cidades_da_casa.append(times_cidades[it[0]])
+            cidade_casa[cidade_time_1] = time_1
 
         return True
 
@@ -69,7 +69,7 @@ times_cidades = {
 
 def gerar_rodada(partidas, classicos):
     qtd_partida = int(len(times_cidades)/2)
-    variaveis = list(range(1, qtd_partida+1))
+    variaveis = list(range(1, qtd_partida + 1))
 
     dominios = {}
     for variavel in variaveis:
