@@ -1,23 +1,30 @@
-from os import remove
-
-
 class Restricao():
-    def __init__(self, variaveis):
-        self.variaveis = variaveis
+  def __init__(self, variaveis):
+      self.variaveis = variaveis
 
-    def esta_satisfeita(self, atribuicao):
-      return True
+  def esta_satisfeita(self, atribuicao):
+    return True
+
+class RestricaoDominio():
+  def reduzir_dominio(self, dominios, valores_atribuidos):
+    return dominios
+
 
 class SatisfacaoRestricoes():
   def __init__(self, variaveis, dominios):
     self.variaveis = variaveis # Variáveis para serem restringidas
     self.dominios = dominios # Domínio de cada variável
-    self.partidas = self.dominios[self.variaveis[0]].copy()
+    self.dominios_copia = dominios.copy()
     self.restricoes = {}
+    self.restricoes_dominio = []
+
     for variavel in self.variaveis:
         self.restricoes[variavel] = []
         if variavel not in self.dominios:
             raise LookupError("Cada variávei precisa de um domínio")
+
+  def adicionar_restricao_dominio(self, restricao_dominio):
+    self.restricoes_dominio.append(restricao_dominio)
 
   def adicionar_restricao(self, restricao):
     for variavel in restricao.variaveis:
@@ -32,15 +39,15 @@ class SatisfacaoRestricoes():
         return False
     return True
   
-  def reduzir_dominio(self, atribuicao):
-    dominio_filtrado = self.partidas.copy()
-    for partida1 in self.partidas:
-      for partida2 in atribuicao.values():
-        if (partida1[0] == partida2[0] and partida1[1] == partida2[1]) and partida1 in dominio_filtrado:
-          dominio_filtrado.remove(partida1)
-    print(len(dominio_filtrado))
-    for variavel in self.variaveis:
-      self.dominios[variavel] = dominio_filtrado
+  # nao vai deixar repetir partida no campeonato e ira reduzir os dominios (otimização)
+  def reduzir_dominio(self, atribuicao: dict):
+    valores_atribuidos = list(atribuicao.values())
+    for key in dict(self.dominios_copia).keys():
+      dominio_filtrado = list(filter(lambda x: (x not in valores_atribuidos), self.dominios_copia[key]))
+      self.dominios[key] = dominio_filtrado
+    
+    for restricao_dominio in self.restricoes_dominio:
+      self.dominios = restricao_dominio.reduzir_dominio(self.dominios, atribuicao, valores_atribuidos)
 
   def busca_backtracking(self, atribuicao = {}):
     # retorna sucesso quando todas as variáveis forem atribuídas
