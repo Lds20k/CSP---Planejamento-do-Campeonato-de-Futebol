@@ -9,6 +9,7 @@ class SatisfacaoRestricoes():
   def __init__(self, variaveis, dominios):
     self.variaveis = variaveis # Variáveis para serem restringidas
     self.dominios = dominios # Domínio de cada variável
+    self.partidas = dominios[1].copy()
     self.restricoes = {}
     for variavel in self.variaveis:
         self.restricoes[variavel] = []
@@ -29,18 +30,17 @@ class SatisfacaoRestricoes():
     return True
   
   def reduzir_dominio(self, atribuicao, variavel):
-    ultima_atribuida = atribuicao[variavel]
+    partida = atribuicao[variavel]
     dominio_filtrado = []
     primeira_variavel = self.variaveis[0]
-    # irá rodar essa melhoria ate a metade das variaveis
-    # pois se for mais do que a metade a chance eh bem maior de nao achar resultado
     if len(atribuicao) < (len(self.variaveis)/2):
       partidas = self.dominios[primeira_variavel].copy()
-      for partida in partidas:
-        # ira remover todas partias com o time1 atribuido
-        if partida[0] != ultima_atribuida[0]:
-          dominio_filtrado.append(partida)
-      # atribui a nova array de dominios filtrado
+      partidas_atribuiddas = []
+      for p in atribuicao.values():
+        partidas_atribuiddas.append(p)
+      for p in partidas:
+        if p != partida and p[0] != partida[0]:
+          dominio_filtrado.append(p)
       for variavel in self.variaveis:
         self.dominios[variavel] = dominio_filtrado
       
