@@ -47,7 +47,7 @@ class SatisfacaoRestricoes():
       self.dominios[key] = dominio_filtrado
     
     for restricao_dominio in self.restricoes_dominio:
-      self.dominios = restricao_dominio.reduzir_dominio(self.dominios, atribuicao, valores_atribuidos)
+      self.dominios = restricao_dominio.reduzir_dominio(self.dominios, atribuicao)
 
   def busca_backtracking(self, atribuicao = {}):
     # retorna sucesso quando todas as variáveis forem atribuídas

@@ -59,25 +59,43 @@ class RestringeDominiosCidade(RestricaoDominio):
     def __init__(self, variaveis):
         super().__init__()
         self.variaveis = variaveis
-    def reduzir_dominio(self, dominios, atribuicao, valores_atribuidos):
-      for key in variaveis:
-        if key in atribuicao:
-          for valor_atribuido in valores_atribuidos:
-            dominio_filtrado = list(filter(lambda x: (equipes[x[0]]["cidade"] != equipes[valor_atribuido[0]]["cidade"]), dominios[key]))
-            dominios[key] = dominio_filtrado
-      return dominios
+    def reduzir_dominio(self, dominios, atribuicao):
+        ultima_atribuida = list(atribuicao.keys())[-1]
+        if ultima_atribuida not in self.variaveis:
+            return dominios
+
+        cidades_atribuidas = []
+        for key in self.variaveis:
+            if atribuicao.get(key) != None:
+                partida = atribuicao[key]
+                if equipes[partida[0]]["cidade"] not in cidades_atribuidas:
+                    cidades_atribuidas.append(equipes[partida[0]]["cidade"])
+                for key in self.variaveis:
+                    dominio_filtrado = list(filter(lambda partida: (equipes[partida[0]]["cidade"] not in cidades_atribuidas), dominios[key]))
+                    dominios[key] = dominio_filtrado
+        return dominios
 
 class RestringeDominiosMesmoTime(RestricaoDominio):
     def __init__(self, variaveis):
         super().__init__()
         self.variaveis = variaveis
-    def reduzir_dominio(self, dominios, atribuicao, valores_atribuidos):
-      for key in variaveis:
-        if key in atribuicao:
-          for valor_atribuido in valores_atribuidos:
-            dominio_filtrado = list(filter(lambda x: ( x[0] != valor_atribuido[0] and x[0] != valor_atribuido[1] and x[1] != valor_atribuido[0] and x[1] != valor_atribuido[1]), dominios[key]))
-            dominios[key] = dominio_filtrado
-      return dominios      
+    def reduzir_dominio(self, dominios, atribuicao):
+        ultima_atribuida = list(atribuicao.keys())[-1]
+        if ultima_atribuida not in self.variaveis:
+            return dominios
+        
+        times_atribuidos = []
+        for key in self.variaveis:
+            if atribuicao.get(key) != None:
+                partida = atribuicao[key]
+                if partida[0] not in times_atribuidos:
+                    times_atribuidos.append(partida[0])
+                if partida[1] not in times_atribuidos:
+                    times_atribuidos.append(partida[1])
+                for key in self.variaveis:
+                    dominio_filtrado = list(filter(lambda partida: (partida[0] not in times_atribuidos and partida[1] not in times_atribuidos), dominios[key]))
+                    dominios[key] = dominio_filtrado
+        return dominios     
 
 def gerar_maiores_times(qntd_maiores_times):
     times_ordenados = list({k: v for k, v in sorted(equipes.items(), key=lambda item: item[1]["torcedores"], reverse=True)}.keys())
