@@ -99,7 +99,7 @@ class RestringeDominiosMesmoTime(RestricaoDominio):
 
 def gerar_maiores_times(qntd_maiores_times):
     times_ordenados = list({k: v for k, v in sorted(equipes.items(), key=lambda item: item[1]["torcedores"], reverse=True)}.keys())
-    maiores_times = [ times_ordenados[i] for i in range(qntd_maiores_times) ]
+    maiores_times = times_ordenados[0:5]
     return maiores_times
 
 def gerar_dominio_com_classicos(qntd_maiores_times):
@@ -143,9 +143,10 @@ if __name__ == "__main__":
         rodadas.append(jogos_rodada)
     
 
+    # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(""))
 
     for jogos_rodada in rodadas:
-        problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(jogos_rodada))
+        # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(jogos_rodada))
         problema.adicionar_restricao_dominio(RestringeDominiosCidade(jogos_rodada))
     
     resposta = problema.busca_backtracking()

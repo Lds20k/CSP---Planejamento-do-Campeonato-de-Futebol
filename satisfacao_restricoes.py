@@ -59,7 +59,7 @@ class SatisfacaoRestricoes():
     # pega primeira variável não atribuída
     primeira_variavel = variaveis_nao_atribuida[0]
     for valor in self.dominios[primeira_variavel]:
-      atribuicao_local = atribuicao.copy()
+      atribuicao_local = atribuicao.copy()   
       atribuicao_local[primeira_variavel] = valor
       # estamos consistentes, seguir recursão
       if self.esta_consistente(primeira_variavel, atribuicao_local):
