@@ -1,5 +1,8 @@
 from satisfacao_restricoes import Restricao, RestricaoDominio, SatisfacaoRestricoes
 from random import shuffle
+import re
+import time
+
 # se escondidos 50
 # porto 45
 # leoes 40
@@ -33,20 +36,69 @@ combinacao_de_todos_jogos = tuple((l1, l2) for l2 in equipes.keys() for l1 in eq
 combinacao_de_todos_jogos = list(filter(lambda x: (x[0] != x[1]), combinacao_de_todos_jogos))
 
 # Dica 1: Fazer Restrições Genéricas
+# class NaoPodePatidaMesmaCidadeNaRodada(Restricao):
+#   def __init__(self, jogos_rodada):
+#     super().__init__(jogos_rodada)
+#     self.jogos_rodada = jogos_rodada
+
+#   # atribuicao = {"variavel1": "valor1", "variavel2": "valor2", ...}
+#   def esta_satisfeita(self, atribuicao):
+#     cidades = []
+#     for jogo in self.jogos_rodada:
+#         if jogo in atribuicao:
+#             if equipes[atribuicao[jogo][0]]["cidade"] in cidades:
+#                 return False
+#             cidades.append(equipes[atribuicao[jogo][0]]["cidade"])
+#     return True
+
 class NaoPodePatidaMesmaCidadeNaRodada(Restricao):
-  def __init__(self, jogos_rodada):
-    super().__init__(jogos_rodada)
-    self.jogos_rodada = jogos_rodada
+  def __init__(self, variaveis, qntd_restricoes_cidades):
+    super().__init__(variaveis)
+    self.qntd_restricoes_cidades = qntd_restricoes_cidades
 
   # atribuicao = {"variavel1": "valor1", "variavel2": "valor2", ...}
   def esta_satisfeita(self, atribuicao):
+    ultimo_variavel_atribuido = list(atribuicao)[-1]
+    ultima_partida_atribuida =  atribuicao[ultimo_variavel_atribuido]
+    numeros_variavel = re.findall('\d\d?', ultimo_variavel_atribuido)
+    rodada = int(numeros_variavel[0])
+    num_jogo = int(numeros_variavel[1])
+    if num_jogo < self.qntd_restricoes_cidades:
+      return True
     cidades = []
-    for jogo in self.jogos_rodada:
-        if jogo in atribuicao:
-            if equipes[atribuicao[jogo][0]]["cidade"] in cidades:
-                return False
-            cidades.append(equipes[atribuicao[jogo][0]]["cidade"])
+    for jogo in range(JOGOS):
+      variavel = 'R' + str(rodada) + 'J' + str(jogo)
+      if jogo < num_jogo:
+        time1= atribuicao[variavel][0]
+        cidades.append(equipes[time1]["cidade"])
+      else:
+        if equipes[ultima_partida_atribuida[0]]["cidade"] in cidades:
+            return False
     return True
+class NaoPodeTimeNaMesmaRodada(Restricao):
+  def __init__(self, variaveis):
+    super().__init__(variaveis)
+
+  # atribuicao = {"variavel1": "valor1", "variavel2": "valor2", ...}
+  def esta_satisfeita(self, atribuicao):
+    ultimo_variavel_atribuido = list(atribuicao)[-1]
+    ultima_partida_atribuida =  atribuicao[ultimo_variavel_atribuido]
+    numeros_variavel = re.findall('\d\d?', ultimo_variavel_atribuido)
+    rodada = int(numeros_variavel[0])
+    num_jogo = int(numeros_variavel[1])
+    times = []
+    for jogo in range(JOGOS):
+      variavel = 'R' + str(rodada) + 'J' + str(jogo)
+      if jogo < num_jogo:
+        time1= atribuicao[variavel][0]
+        times.append(time1)
+        time2= atribuicao[variavel][1]
+        times.append(time2)
+      else:
+        if ultima_partida_atribuida[0] in times or ultima_partida_atribuida[1] in times:
+            return False
+    return True
+    
 
 class TemQueTerCidadeNaRodada(Restricao):
   def __init__(self, jogo, cidade):
@@ -152,6 +204,7 @@ def definir_prioridade(jogos, prioridade):
   return times_ordenados_por_prioridade
   
 if __name__ == "__main__":
+    seconds = time.time()
     variaveis = []
     dominios = {}
     jogos_classicos = gerar_jogos_classicos(5)
@@ -182,7 +235,10 @@ if __name__ == "__main__":
             jogos_rodada.append("R" + str(i) + "J" + str(j))
         rodadas.append(jogos_rodada)
     
-
+    problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
+    problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
+    
+    
     # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(""))
 
     # for jogos_rodada in rodadas:
@@ -198,3 +254,5 @@ if __name__ == "__main__":
         for j in range(JOGOS): # jogos
           jogo = resposta["R" + str(i) + "J" + str(j)]
           print("Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"])
+
+    print(f'Demorou {seconds/60} minutos.', )
