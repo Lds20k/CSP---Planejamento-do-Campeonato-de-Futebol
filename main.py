@@ -34,23 +34,6 @@ combinacao_de_todos_jogos = tuple((l1, l2) for l2 in equipes.keys() for l1 in eq
 
 # remove jogos com o mesmo time
 combinacao_de_todos_jogos = list(filter(lambda x: (x[0] != x[1]), combinacao_de_todos_jogos))
-
-# Dica 1: Fazer Restrições Genéricas
-# class NaoPodePatidaMesmaCidadeNaRodada(Restricao):
-#   def __init__(self, jogos_rodada):
-#     super().__init__(jogos_rodada)
-#     self.jogos_rodada = jogos_rodada
-
-#   # atribuicao = {"variavel1": "valor1", "variavel2": "valor2", ...}
-#   def esta_satisfeita(self, atribuicao):
-#     cidades = []
-#     for jogo in self.jogos_rodada:
-#         if jogo in atribuicao:
-#             if equipes[atribuicao[jogo][0]]["cidade"] in cidades:
-#                 return False
-#             cidades.append(equipes[atribuicao[jogo][0]]["cidade"])
-#     return True
-
 class NaoPodePatidaMesmaCidadeNaRodada(Restricao):
   def __init__(self, variaveis, qntd_restricoes_cidades):
     super().__init__(variaveis)
@@ -98,61 +81,53 @@ class NaoPodeTimeNaMesmaRodada(Restricao):
         if ultima_partida_atribuida[0] in times or ultima_partida_atribuida[1] in times:
             return False
     return True
-    
-
-class TemQueTerCidadeNaRodada(Restricao):
-  def __init__(self, jogo, cidade):
-    super().__init__(jogo)
-    self.jogo = jogo
-    self.cidade = cidade
-
-  # atribuicao = {"variavel1": "valor1", "variavel2": "valor2", ...}
-  def esta_satisfeita(self, atribuicao):
-    if jogo in atribuicao and equipes[atribuicao[jogo][0]]["cidade"] == self.cidade:
-        return True
-    return False
 
 class RestringeDominiosCidade(RestricaoDominio):
-    def __init__(self, variaveis):
+    def __init__(self, qntd_restricoes_cidades):
         super().__init__()
-        self.variaveis = variaveis
+        self.qntd_restricoes_cidades = qntd_restricoes_cidades
     def reduzir_dominio(self, dominios, atribuicao):
-        ultima_atribuida = list(atribuicao.keys())[-1]
-        if ultima_atribuida not in self.variaveis:
-            return dominios
+      ultimo_variavel_atribuido = list(atribuicao)[-1]
+      ultima_partida_atribuida =  atribuicao[ultimo_variavel_atribuido]
+      numeros_variavel = re.findall('\d\d?', ultimo_variavel_atribuido)
+      rodada = int(numeros_variavel[0])
+      num_jogo = int(numeros_variavel[1])
 
-        cidades_atribuidas = []
-        for key in self.variaveis:
-            if atribuicao.get(key) != None:
-                partida = atribuicao[key]
-                if equipes[partida[0]]["cidade"] not in cidades_atribuidas:
-                    cidades_atribuidas.append(equipes[partida[0]]["cidade"])
-                for key in self.variaveis:
-                    dominio_filtrado = list(filter(lambda partida: (equipes[partida[0]]["cidade"] not in cidades_atribuidas), dominios[key]))
-                    dominios[key] = dominio_filtrado
+      if num_jogo < self.qntd_restricoes_cidades:
         return dominios
 
+      cidades = []
+      for jogo in range(JOGOS):
+        variavel = 'R' + str(rodada) + 'J' + str(jogo)
+        if jogo < num_jogo:
+          time1= atribuicao[variavel][0]
+          cidades.append(equipes[time1]["cidade"])
+        else:
+          dominio_filtrado = list(filter(lambda x: (x not in cidades), dominios[variavel]))
+          dominios[variavel] = dominio_filtrado
+      return dominios
+
 class RestringeDominiosMesmoTime(RestricaoDominio):
-    def __init__(self, variaveis):
+    def __init__(self):
         super().__init__()
-        self.variaveis = variaveis
     def reduzir_dominio(self, dominios, atribuicao):
-        ultima_atribuida = list(atribuicao.keys())[-1]
-        if ultima_atribuida not in self.variaveis:
-            return dominios
-        
-        times_atribuidos = []
-        for key in self.variaveis:
-            if atribuicao.get(key) != None:
-                partida = atribuicao[key]
-                if partida[0] not in times_atribuidos:
-                    times_atribuidos.append(partida[0])
-                if partida[1] not in times_atribuidos:
-                    times_atribuidos.append(partida[1])
-                for key in self.variaveis:
-                    dominio_filtrado = list(filter(lambda partida: (partida[0] not in times_atribuidos and partida[1] not in times_atribuidos), dominios[key]))
-                    dominios[key] = dominio_filtrado
-        return dominios     
+      ultimo_variavel_atribuido = list(atribuicao)[-1]
+      ultima_partida_atribuida =  atribuicao[ultimo_variavel_atribuido]
+      numeros_variavel = re.findall('\d\d?', ultimo_variavel_atribuido)
+      rodada = int(numeros_variavel[0])
+      num_jogo = int(numeros_variavel[1])
+      times = []
+      for jogo in range(JOGOS):
+        variavel = 'R' + str(rodada) + 'J' + str(jogo)
+        if jogo <= num_jogo:
+          time1= atribuicao[variavel][0]
+          times.append(time1)
+          time2= atribuicao[variavel][1]
+          times.append(time2)
+        else:
+          dominio_filtrado = list(filter(lambda x: (x[0] not in times and x[1] not in times), dominios[variavel]))
+          dominios[variavel] = dominio_filtrado
+      return dominios     
 
 def gerar_maiores_times(qntd_maiores_times):
     times_ordenados = list({k: v for k, v in sorted(equipes.items(), key=lambda item: item[1]["torcedores"], reverse=True)}.keys())
@@ -204,7 +179,7 @@ def definir_prioridade(jogos, prioridade):
   return times_ordenados_por_prioridade
   
 if __name__ == "__main__":
-    seconds = time.time()
+    start_time = time.time()
     variaveis = []
     dominios = {}
     jogos_classicos = gerar_jogos_classicos(5)
@@ -235,15 +210,11 @@ if __name__ == "__main__":
             jogos_rodada.append("R" + str(i) + "J" + str(j))
         rodadas.append(jogos_rodada)
     
-    problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
-    problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
-    
-    
-    # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(""))
+    # problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
+    # problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
 
-    # for jogos_rodada in rodadas:
-        # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime(jogos_rodada))
-        # problema.adicionar_restricao_dominio(RestringeDominiosCidade(jogos_rodada))
+    problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime())
+    problema.adicionar_restricao_dominio(RestringeDominiosCidade(qntd_restricoes_cidades))
     
     resposta = problema.busca_backtracking()
     if resposta is None:
@@ -255,4 +226,4 @@ if __name__ == "__main__":
           jogo = resposta["R" + str(i) + "J" + str(j)]
           print("Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"])
 
-    print(f'Demorou {seconds/60} minutos.', )
+    print("Demorou ",round(time.time()-start_time,0),'segundos',end='\n')
