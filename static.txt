@@ -1,2 +1,2 @@
 Seed: 1650042668.6952126
-Demorou: 2.0 segundos
+Demorou: 00 minuto(s) e 01 segundo(s)

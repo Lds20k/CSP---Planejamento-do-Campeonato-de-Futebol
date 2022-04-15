@@ -2,6 +2,7 @@ from satisfacao_restricoes import FiltroDominio, Restricao, SatisfacaoRestricoes
 from random import seed, shuffle
 import re
 import time
+import datetime
 
 # se escondidos 50
 # porto 45
@@ -264,10 +265,10 @@ if __name__ == "__main__":
             respota_str += '\n'
     with open('table.txt', 'w', encoding='utf-8') as file:
       file.write(respota_str)
-    
-    tempo_duracao = round(time.time()-start_time,0)
-    new_static = "Seed: " + str(seed_number) + "\nDemorou: " + str(tempo_duracao) + " segundos"
+
+    tempo_duracao =  time.strftime("%M minuto(s) e %S segundo(s)", time.gmtime(time.time()-start_time))
+    new_static = "Seed: " + str(seed_number) + "\nDemorou: " + tempo_duracao
     with open('static.txt', 'w', encoding='utf-8') as file:
       file.write(new_static)
     
-    print("Demorou ",tempo_duracao,'segundos',end='\n')
+    print("Demorou: ",tempo_duracao,end='\n')
