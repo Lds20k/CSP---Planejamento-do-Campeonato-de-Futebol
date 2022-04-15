@@ -1,5 +1,5 @@
-from satisfacao_restricoes import Restricao, RestricaoDominio, SatisfacaoRestricoes
-from random import shuffle
+from satisfacao_restricoes import FiltroDominio, Restricao, SatisfacaoRestricoes
+from random import seed, shuffle
 import re
 import time
 
@@ -28,6 +28,7 @@ equipes = {
 TURNOS = 2
 RODADAS = (len(equipes)-1) * TURNOS
 JOGOS = int(len(equipes)/2)
+USAR_ULTIMA_SEED = True
 
 # gera combinação de todos os jogos
 combinacao_de_todos_jogos = tuple((l1, l2) for l2 in equipes.keys() for l1 in equipes.keys())
@@ -72,17 +73,17 @@ class NaoPodeTimeNaMesmaRodada(Restricao):
     times = []
     for jogo in range(JOGOS):
       variavel = 'R' + str(rodada) + 'J' + str(jogo)
-      if jogo < num_jogo:
-        time1= atribuicao[variavel][0]
-        times.append(time1)
-        time2= atribuicao[variavel][1]
-        times.append(time2)
-      else:
-        if ultima_partida_atribuida[0] in times or ultima_partida_atribuida[1] in times:
-            return False
+      if atribuicao.get(variavel) != None:
+        if atribuicao[variavel][0] not in times and atribuicao[variavel][1] not in times:
+          time1= atribuicao[variavel][0]
+          times.append(time1)
+          time2= atribuicao[variavel][1]
+          times.append(time2)
+        else:
+          return False
     return True
 
-class RestringeDominiosCidade(RestricaoDominio):
+class RestringeDominiosCidade(FiltroDominio):
     def __init__(self, qntd_restricoes_cidades):
         super().__init__()
         self.qntd_restricoes_cidades = qntd_restricoes_cidades
@@ -107,7 +108,7 @@ class RestringeDominiosCidade(RestricaoDominio):
           dominios[variavel] = dominio_filtrado
       return dominios
 
-class RestringeDominiosMesmoTime(RestricaoDominio):
+class RestringeDominiosMesmoTime(FiltroDominio):
     def __init__(self):
         super().__init__()
     def reduzir_dominio(self, dominios, atribuicao):
@@ -117,17 +118,37 @@ class RestringeDominiosMesmoTime(RestricaoDominio):
       rodada = int(numeros_variavel[0])
       num_jogo = int(numeros_variavel[1])
       times = []
+      variaveis_nao_atribuidas = []
+      
       for jogo in range(JOGOS):
         variavel = 'R' + str(rodada) + 'J' + str(jogo)
-        if jogo <= num_jogo:
+        if atribuicao.get(variavel) != None:
           time1= atribuicao[variavel][0]
           times.append(time1)
           time2= atribuicao[variavel][1]
           times.append(time2)
         else:
-          dominio_filtrado = list(filter(lambda x: (x[0] not in times and x[1] not in times), dominios[variavel]))
-          dominios[variavel] = dominio_filtrado
+          variaveis_nao_atribuidas.append(variavel)
+
+      for variavel in variaveis_nao_atribuidas:
+        dominio_filtrado = list(filter(lambda x: (x[0] not in times and x[1] not in times), dominios[variavel]))
+        dominios[variavel] = dominio_filtrado
       return dominios     
+
+
+
+      # times = []
+      # for jogo in range(JOGOS):
+      #   variavel = 'R' + str(rodada) + 'J' + str(jogo)
+      #   if jogo <= num_jogo:
+      #     time1= atribuicao[variavel][0]
+      #     times.append(time1)
+      #     time2= atribuicao[variavel][1]
+      #     times.append(time2)
+      #   else:
+      #     dominio_filtrado = list(filter(lambda x: (x[0] not in times and x[1] not in times), dominios[variavel]))
+      #     dominios[variavel] = dominio_filtrado
+      # return dominios     
 
 def gerar_maiores_times(qntd_maiores_times):
     times_ordenados = list({k: v for k, v in sorted(equipes.items(), key=lambda item: item[1]["torcedores"], reverse=True)}.keys())
@@ -180,6 +201,17 @@ def definir_prioridade(jogos, prioridade):
   
 if __name__ == "__main__":
     start_time = time.time()
+    linhas = ''
+    seed_number = ''
+    if USAR_ULTIMA_SEED:
+      with open('static.txt', encoding='utf-8') as file:
+        linhas = file.read().split('\n')
+      seed_number = float(linhas[0].split(' ')[1])
+    else:
+      seed_number = start_time
+
+    seed(seed_number)
+    
     variaveis = []
     dominios = {}
     jogos_classicos = gerar_jogos_classicos(5)
@@ -213,17 +245,29 @@ if __name__ == "__main__":
     # problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
     # problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
 
-    problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime())
-    problema.adicionar_restricao_dominio(RestringeDominiosCidade(qntd_restricoes_cidades))
+    # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime())
+    # problema.adicionar_restricao_dominio(RestringeDominiosCidade(qntd_restricoes_cidades))
     
+    print("Contruindo tabela...")
     resposta = problema.busca_backtracking()
+
+    respota_str = "TABELA DE JOGOS\n\n"
     if resposta is None:
-      print("Nenhuma resposta encontrada")
+      respota_str = "Nenhuma resposta encontrada\n"
     else:
       for i in range(RODADAS): # rodadas
-        print("\n---------- Rodada " + str(i+1) + " ----------\n")
+        respota_str += "---------- Rodada " + str(i+1) + " ----------\n"
         for j in range(JOGOS): # jogos
           jogo = resposta["R" + str(i) + "J" + str(j)]
-          print("Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"])
-
-    print("Demorou ",round(time.time()-start_time,0),'segundos',end='\n')
+          respota_str += "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"] + '\n'
+          if j == (JOGOS - 1):
+            respota_str += '\n'
+    with open('table.txt', 'w', encoding='utf-8') as file:
+      file.write(respota_str)
+    
+    tempo_duracao = round(time.time()-start_time,0)
+    new_static = "Seed: " + str(seed_number) + "\nDemorou: " + str(tempo_duracao) + " segundos"
+    with open('static.txt', 'w', encoding='utf-8') as file:
+      file.write(new_static)
+    
+    print("Demorou ",tempo_duracao,'segundos',end='\n')

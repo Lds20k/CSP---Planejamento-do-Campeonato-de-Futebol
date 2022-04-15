@@ -5,7 +5,7 @@ class Restricao():
   def esta_satisfeita(self, atribuicao):
     return True
 
-class RestricaoDominio():
+class FiltroDominio():
   def reduzir_dominio(self, dominios, valores_atribuidos):
     return dominios
 
@@ -46,8 +46,17 @@ class SatisfacaoRestricoes():
       dominio_filtrado = list(filter(lambda x: (x not in valores_atribuidos), self.dominios_copia[key]))
       self.dominios[key] = dominio_filtrado
     
-    for restricao_dominio in self.restricoes_dominio:
-      self.dominios = restricao_dominio.reduzir_dominio(self.dominios, atribuicao)
+    for filtros_dominio in self.restricoes_dominio:
+      self.dominios = filtros_dominio.reduzir_dominio(self.dominios, atribuicao)
+
+  def escolher_menor_dominio(self, variaveis_nao_atribuida):
+    menor_tamanho_dominio = 182
+    variavel_com_menor_dominio = ''
+    for variavel, dominio in self.dominios.items():
+      if variavel in variaveis_nao_atribuida and len(dominio) < menor_tamanho_dominio:
+        menor_tamanho_dominio = len(dominio)
+        variavel_com_menor_dominio = variavel
+    return variavel_com_menor_dominio
 
   def busca_backtracking(self, atribuicao = {}):
     # retorna sucesso quando todas as variáveis forem atribuídas
@@ -56,13 +65,14 @@ class SatisfacaoRestricoes():
 
     # pega todas as variáveis que ainda não foram atribuídas
     variaveis_nao_atribuida  = [v for v in self.variaveis if v not in atribuicao]
-    # pega primeira variável não atribuída
-    primeira_variavel = variaveis_nao_atribuida[0]
-    for valor in self.dominios[primeira_variavel]:
+    # print(len(atribuicao))
+    # pega a variável com menor dominio
+    variavel_menor_dominio = self.escolher_menor_dominio(variaveis_nao_atribuida)
+    for valor in self.dominios[variavel_menor_dominio]:
       atribuicao_local = atribuicao.copy()   
-      atribuicao_local[primeira_variavel] = valor
+      atribuicao_local[variavel_menor_dominio] = valor
       # estamos consistentes, seguir recursão
-      if self.esta_consistente(primeira_variavel, atribuicao_local):
+      if self.esta_consistente(variavel_menor_dominio, atribuicao_local):
         self.reduzir_dominio(atribuicao_local)
         resultado  = self.busca_backtracking(atribuicao_local)
         # para o backtracking se não encontra todos os resultados
