@@ -31,7 +31,7 @@ equipes = {
 TURNOS = 2
 RODADAS = (len(equipes)-1) * TURNOS
 JOGOS = int(len(equipes)/2)
-USAR_ULTIMA_SEED = False
+USAR_ULTIMA_SEED = True
 
 # gera combinação de todos os jogos
 combinacao_de_todos_jogos = tuple((l1, l2) for l2 in equipes.keys() for l1 in equipes.keys())
