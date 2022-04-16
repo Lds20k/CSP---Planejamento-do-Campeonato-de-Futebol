@@ -251,14 +251,17 @@ if __name__ == "__main__":
         for j in range(JOGOS): # jogos
             jogos_rodada.append("R" + str(i) + "J" + str(j))
         rodadas.append(jogos_rodada)
+
+    # nao repete cidade 
+    problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
+    problema.adicionar_restricao_dominio(RestringeDominiosCidade(qntd_restricoes_cidades))
     
-    # problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
-    # problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
-    
+    # nao repete classico
     problema.adicionar_restricao(NaoPodeClassicoNaMesmaRodada(variaveis, jogos_classicos))
 
+    # nao repete time na rodada
+    # problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
     # problema.adicionar_restricao_dominio(RestringeDominiosMesmoTime())
-    # problema.adicionar_restricao_dominio(RestringeDominiosCidade(qntd_restricoes_cidades))
     
     print("Contruindo tabela...")
     resposta = problema.busca_backtracking()
