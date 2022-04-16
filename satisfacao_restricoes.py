@@ -58,6 +58,29 @@ class SatisfacaoRestricoes():
         variavel_com_menor_dominio = variavel
     return variavel_com_menor_dominio
 
+  def ordenar_dominio(self, dominio, atribuicao):
+    count_times_atribuicoes = {}
+    for jogo in dominio:
+      count_times_atribuicoes[jogo[0]] = 0
+      count_times_atribuicoes[jogo[1]] = 0
+
+    for jogo in atribuicao.values():
+      time1 = jogo[0]
+      if count_times_atribuicoes.get(time1) != None:
+        count_times_atribuicoes[time1] += 1
+      else:
+        count_times_atribuicoes[time1] = 1
+      
+      time2 = jogo[1]
+      if count_times_atribuicoes.get(time2) != None:
+        count_times_atribuicoes[time2] += 1
+      else:
+        count_times_atribuicoes[time2] = 1
+      
+
+    dominio_ordenado = list(sorted(dominio, key=lambda jogo: count_times_atribuicoes[jogo[0]] + count_times_atribuicoes[jogo[1]], reverse=True))
+    return dominio_ordenado
+
   def busca_backtracking(self, atribuicao = {}):
     # retorna sucesso quando todas as variáveis forem atribuídas
     if len(atribuicao) == len(self.variaveis):
@@ -68,13 +91,16 @@ class SatisfacaoRestricoes():
     # print(len(atribuicao))
     # pega a variável com menor dominio
     variavel_menor_dominio = self.escolher_menor_dominio(variaveis_nao_atribuida)
+    # dominio_ordenado = self.ordenar_dominio(self.dominios[variavel_menor_dominio], atribuicao)
     for valor in self.dominios[variavel_menor_dominio]:
       atribuicao_local = atribuicao.copy()   
       atribuicao_local[variavel_menor_dominio] = valor
+
       # estamos consistentes, seguir recursão
       if self.esta_consistente(variavel_menor_dominio, atribuicao_local):
         self.reduzir_dominio(atribuicao_local)
-        resultado  = self.busca_backtracking(atribuicao_local)
+        resultado = self.busca_backtracking(atribuicao_local)
+
         # para o backtracking se não encontra todos os resultados
         if resultado is not None:
           return resultado
