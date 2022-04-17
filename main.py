@@ -323,13 +323,29 @@ if __name__ == "__main__":
       if resposta is None:
         respota_str = "Nenhuma resposta encontrada\n"
       else:
-        for i in range(RODADAS): # rodadas
+        rodadas = []
+        jogos_rodada = []
+        count_jogos_rodada = 0
+        
+        # atribui as rodadas em uma matriz e embaralha os dados entre rodadas (muda a ordem dos jogos da rodada e a ordem das rodadas)
+        for variavel in variaveis:
+          jogo = resposta[variavel]
+          jogos_rodada.append(jogo)
+          count_jogos_rodada += 1
+          if count_jogos_rodada == JOGOS:
+            count_jogos_rodada = 0
+            shuffle(jogos_rodada)
+            rodadas.append(jogos_rodada.copy())
+            jogos_rodada = []
+        shuffle(rodadas)
+        
+        for i in range(len(rodadas)): # rodadas
           respota_str += "---------- Rodada " + str(i+1) + " ----------\n"
-          for j in range(JOGOS): # jogos
-            jogo = resposta["R" + str(i) + "J" + str(j)]
+          for j in range(len(rodadas[i])):
+            jogo = rodadas[i][j]
             respota_str += "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"] + '\n'
-            if j == (JOGOS - 1):
-              respota_str += '\n'
+          respota_str += '\n'
+      
       with open('table.txt', 'w', encoding='utf-8') as file:
         file.write(respota_str)
 
