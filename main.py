@@ -251,6 +251,18 @@ def gerar_jogos_separados_cidades_exclusivas():
 
   return jogos_sem_restricao_cidade_todas_rodadas, list(cidade_jogos.values())
 
+def gerar_primeiro_turno():
+  jogos_porto = []
+  primeiro_turno = []
+  for i in range(len(combinacao_de_todos_jogos)):
+    if i % 2 == 0:
+      primeiro_turno.append(combinacao_de_todos_jogos[i])
+  
+  for jogo in primeiro_turno:
+    if jogo[0] == 'Porto EC' or jogo[1] == 'Porto EC':
+      jogos_porto.append(jogo)
+  return primeiro_turno
+
 # define uma prioridade no dominio
 # no caso usamos os classicos para eles terem prioridades e evitar que a restricao sobrecarregue no final
 def definir_prioridade(jogos, prioridade):
@@ -259,6 +271,7 @@ def definir_prioridade(jogos, prioridade):
 
 if __name__ == "__main__":
     start_time = time.time()
+    primeiro_turno = gerar_primeiro_turno()
     linhas = ''
     numero_semente = ''
     if USAR_ULTIMA_SEED:
