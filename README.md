@@ -3,7 +3,7 @@ Constrói uma tabela de rodadas e jogos dentro do arquivo table.txt, para inicia
 
 ## O que é uma variável?
 A variavel é partida, i.e., a combinação da rodada com o jogo da rodada.
-Exemplo: R0P0, R0J1, ..., R(i)J(j)
+Exemplo: R0J0, R0J1, ..., R(i)J(j)
 
 ## Como se define o domínio do problema?
 O domínio é todos os jogos do campeonato (uma tupla com timeA  e timeB).
