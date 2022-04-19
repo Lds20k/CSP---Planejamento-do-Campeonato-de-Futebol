@@ -257,6 +257,14 @@ def definir_prioridade(jogos, prioridade):
   times_ordenados_por_prioridade = list(sorted(jogos, key=lambda jogo: jogo in prioridade, reverse=True))
   return times_ordenados_por_prioridade
 
+
+def gerar_rodada_partida(qtd_partidas, qtd_rodadas):
+    rodadas_partidas = []
+    for i in range(1, qtd_rodadas + 1):
+        for j in range(1, qtd_partidas + 1):
+            rodadas_partidas.append(f"R{i}P{j}")
+    return rodadas_partidas
+
 if __name__ == "__main__":
     start_time = time.time()
     linhas = ''
