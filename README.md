@@ -1,15 +1,14 @@
 # CSP para campeonato de futebol
-Constroí uma tabela de rodadas e jogos dentro do arquivo table.txt, para iniciar basta ter Python3 instalado e rodar no modo debug.
+Constrói uma tabela de rodadas e jogos dentro do arquivo table.txt, para iniciar basta ter Python3 instalado e rodar no modo debug.
 
-# O que é uma variável
+## O que é uma variável?
 A variavel é partida, i.e., a combinação da rodada com o jogo da rodada.
 Exemplo: R0P0, R0J1, ..., R(i)J(j)
 
-# Como se define o domínio do problema
+## Como se define o domínio do problema?
 O domínio é todos os jogos do campeonato (uma tupla com timeA  e timeB).
 
-# Quais são as restrições do problema
-## Restrições
+## Quais são as restrições do problema?
 
 - Todos os times devem jogar todas as rodadas uns contra os outros em jogos de turno e returno;
 
