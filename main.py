@@ -351,7 +351,15 @@ if __name__ == "__main__":
           respota_str += "---------- Rodada " + str(i+1) + " ----------\n"
           for j in range(len(rodadas[i])):
             jogo = rodadas[i][j]
-            respota_str += "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1] + "\tCidade: " + equipes[jogo[0]]["cidade"] + '\n'
+
+            jogo_str = "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1]
+            
+            while len(jogo_str) < 40:
+              jogo_str += " "
+
+            jogo_str += "Cidade: " + equipes[jogo[0]]["cidade"] + '\n'
+            
+            respota_str += jogo_str
           respota_str += '\n'
       
       with open('table.txt', 'w', encoding='utf-8') as file:

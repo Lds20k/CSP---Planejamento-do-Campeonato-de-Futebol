@@ -1,236 +1,236 @@
 TABELA DE JOGOS
 
 ---------- Rodada 1 ----------
-Jogo 1: Campos FC x CA Azedos	Cidade: Campos
-Jogo 2: CA Lagos x Secretos FC	Cidade: Lagos
-Jogo 3: Portuários AA x SE Granada	Cidade: Porto
-Jogo 4: Simba FC x Guardiões FC	Cidade: Leão
-Jogo 5: CA Protetores x Ferroviária EC	Cidade: Guardião
-Jogo 6: Solaris RC x SE Leões	Cidade: Ponte-do-Sol
-Jogo 7: SE Escondidos x Porto EC	Cidade: Escondidos
+Jogo 1: Campos FC x CA Azedos           Cidade: Campos
+Jogo 2: CA Lagos x Secretos FC          Cidade: Lagos
+Jogo 3: Portuários AA x SE Granada      Cidade: Porto
+Jogo 4: Simba FC x Guardiões FC         Cidade: Leão
+Jogo 5: CA Protetores x Ferroviária EC  Cidade: Guardião
+Jogo 6: Solaris RC x SE Leões           Cidade: Ponte-do-Sol
+Jogo 7: SE Escondidos x Porto EC        Cidade: Escondidos
 
 ---------- Rodada 2 ----------
-Jogo 1: SE Escondidos x CA Lagos	Cidade: Escondidos
-Jogo 2: Guardiões FC x Campos FC	Cidade: Guardião
-Jogo 3: SE Granada x Simba FC	Cidade: Granada
-Jogo 4: CA Azedos x Portuários AA	Cidade: Limões
-Jogo 5: Ferroviária EC x Solaris RC	Cidade: Campos
-Jogo 6: SE Leões x CA Protetores	Cidade: Leão
-Jogo 7: Porto EC x Secretos FC	Cidade: Porto
+Jogo 1: SE Escondidos x CA Lagos        Cidade: Escondidos
+Jogo 2: Guardiões FC x Campos FC        Cidade: Guardião
+Jogo 3: SE Granada x Simba FC           Cidade: Granada
+Jogo 4: CA Azedos x Portuários AA       Cidade: Limões
+Jogo 5: Ferroviária EC x Solaris RC     Cidade: Campos
+Jogo 6: SE Leões x CA Protetores        Cidade: Leão
+Jogo 7: Porto EC x Secretos FC          Cidade: Porto
 
 ---------- Rodada 3 ----------
-Jogo 1: SE Escondidos x SE Leões	Cidade: Escondidos
-Jogo 2: CA Azedos x Solaris RC	Cidade: Limões
-Jogo 3: SE Granada x Ferroviária EC	Cidade: Granada
-Jogo 4: Porto EC x CA Lagos	Cidade: Porto
-Jogo 5: Guardiões FC x Portuários AA	Cidade: Guardião
-Jogo 6: Simba FC x Secretos FC	Cidade: Leão
-Jogo 7: Campos FC x CA Protetores	Cidade: Campos
+Jogo 1: SE Escondidos x SE Leões        Cidade: Escondidos
+Jogo 2: CA Azedos x Solaris RC          Cidade: Limões
+Jogo 3: SE Granada x Ferroviária EC     Cidade: Granada
+Jogo 4: Porto EC x CA Lagos             Cidade: Porto
+Jogo 5: Guardiões FC x Portuários AA    Cidade: Guardião
+Jogo 6: Simba FC x Secretos FC          Cidade: Leão
+Jogo 7: Campos FC x CA Protetores       Cidade: Campos
 
 ---------- Rodada 4 ----------
-Jogo 1: Porto EC x SE Leões	Cidade: Porto
-Jogo 2: SE Escondidos x Secretos FC	Cidade: Escondidos
-Jogo 3: Simba FC x Solaris RC	Cidade: Leão
-Jogo 4: Ferroviária EC x Portuários AA	Cidade: Campos
-Jogo 5: CA Protetores x Guardiões FC	Cidade: Guardião
-Jogo 6: CA Azedos x Campos FC	Cidade: Limões
-Jogo 7: SE Granada x CA Lagos	Cidade: Granada
+Jogo 1: Porto EC x SE Leões             Cidade: Porto
+Jogo 2: SE Escondidos x Secretos FC     Cidade: Escondidos
+Jogo 3: Simba FC x Solaris RC           Cidade: Leão
+Jogo 4: Ferroviária EC x Portuários AA  Cidade: Campos
+Jogo 5: CA Protetores x Guardiões FC    Cidade: Guardião
+Jogo 6: CA Azedos x Campos FC           Cidade: Limões
+Jogo 7: SE Granada x CA Lagos           Cidade: Granada
 
 ---------- Rodada 5 ----------
-Jogo 1: Porto EC x CA Protetores	Cidade: Porto
-Jogo 2: Ferroviária EC x SE Leões	Cidade: Campos
-Jogo 3: Guardiões FC x CA Lagos	Cidade: Guardião
-Jogo 4: SE Granada x Campos FC	Cidade: Granada
-Jogo 5: Solaris RC x Portuários AA	Cidade: Ponte-do-Sol
-Jogo 6: Secretos FC x SE Escondidos	Cidade: Escondidos
-Jogo 7: Simba FC x CA Azedos	Cidade: Leão
+Jogo 1: Porto EC x CA Protetores        Cidade: Porto
+Jogo 2: Ferroviária EC x SE Leões       Cidade: Campos
+Jogo 3: Guardiões FC x CA Lagos         Cidade: Guardião
+Jogo 4: SE Granada x Campos FC          Cidade: Granada
+Jogo 5: Solaris RC x Portuários AA      Cidade: Ponte-do-Sol
+Jogo 6: Secretos FC x SE Escondidos     Cidade: Escondidos
+Jogo 7: Simba FC x CA Azedos            Cidade: Leão
 
 ---------- Rodada 6 ----------
-Jogo 1: Portuários AA x CA Azedos	Cidade: Porto
-Jogo 2: Ferroviária EC x SE Granada	Cidade: Campos
-Jogo 3: Simba FC x CA Protetores	Cidade: Leão
-Jogo 4: Guardiões FC x SE Escondidos	Cidade: Guardião
-Jogo 5: CA Lagos x SE Leões	Cidade: Lagos
-Jogo 6: Solaris RC x Campos FC	Cidade: Ponte-do-Sol
-Jogo 7: Secretos FC x Porto EC	Cidade: Escondidos
+Jogo 1: Portuários AA x CA Azedos       Cidade: Porto
+Jogo 2: Ferroviária EC x SE Granada     Cidade: Campos
+Jogo 3: Simba FC x CA Protetores        Cidade: Leão
+Jogo 4: Guardiões FC x SE Escondidos    Cidade: Guardião
+Jogo 5: CA Lagos x SE Leões             Cidade: Lagos
+Jogo 6: Solaris RC x Campos FC          Cidade: Ponte-do-Sol
+Jogo 7: Secretos FC x Porto EC          Cidade: Escondidos
 
 ---------- Rodada 7 ----------
-Jogo 1: CA Azedos x CA Protetores	Cidade: Limões
-Jogo 2: Porto EC x Solaris RC	Cidade: Porto
-Jogo 3: Campos FC x CA Lagos	Cidade: Campos
-Jogo 4: Guardiões FC x Secretos FC	Cidade: Guardião
-Jogo 5: SE Granada x SE Leões	Cidade: Granada
-Jogo 6: Simba FC x Portuários AA	Cidade: Leão
-Jogo 7: SE Escondidos x Ferroviária EC	Cidade: Escondidos
+Jogo 1: CA Azedos x CA Protetores       Cidade: Limões
+Jogo 2: Porto EC x Solaris RC           Cidade: Porto
+Jogo 3: Campos FC x CA Lagos            Cidade: Campos
+Jogo 4: Guardiões FC x Secretos FC      Cidade: Guardião
+Jogo 5: SE Granada x SE Leões           Cidade: Granada
+Jogo 6: Simba FC x Portuários AA        Cidade: Leão
+Jogo 7: SE Escondidos x Ferroviária EC  Cidade: Escondidos
 
 ---------- Rodada 8 ----------
-Jogo 1: CA Lagos x Portuários AA	Cidade: Lagos
-Jogo 2: CA Protetores x Secretos FC	Cidade: Guardião
-Jogo 3: Ferroviária EC x Simba FC	Cidade: Campos
-Jogo 4: SE Leões x Guardiões FC	Cidade: Leão
-Jogo 5: Porto EC x Campos FC	Cidade: Porto
-Jogo 6: SE Escondidos x Solaris RC	Cidade: Escondidos
-Jogo 7: CA Azedos x SE Granada	Cidade: Limões
+Jogo 1: CA Lagos x Portuários AA        Cidade: Lagos
+Jogo 2: CA Protetores x Secretos FC     Cidade: Guardião
+Jogo 3: Ferroviária EC x Simba FC       Cidade: Campos
+Jogo 4: SE Leões x Guardiões FC         Cidade: Leão
+Jogo 5: Porto EC x Campos FC            Cidade: Porto
+Jogo 6: SE Escondidos x Solaris RC      Cidade: Escondidos
+Jogo 7: CA Azedos x SE Granada          Cidade: Limões
 
 ---------- Rodada 9 ----------
-Jogo 1: Porto EC x Ferroviária EC	Cidade: Porto
-Jogo 2: SE Leões x Solaris RC	Cidade: Leão
-Jogo 3: SE Escondidos x Portuários AA	Cidade: Escondidos
-Jogo 4: Guardiões FC x CA Protetores	Cidade: Guardião
-Jogo 5: Campos FC x Simba FC	Cidade: Campos
-Jogo 6: CA Azedos x CA Lagos	Cidade: Limões
-Jogo 7: SE Granada x Secretos FC	Cidade: Granada
+Jogo 1: Porto EC x Ferroviária EC       Cidade: Porto
+Jogo 2: SE Leões x Solaris RC           Cidade: Leão
+Jogo 3: SE Escondidos x Portuários AA   Cidade: Escondidos
+Jogo 4: Guardiões FC x CA Protetores    Cidade: Guardião
+Jogo 5: Campos FC x Simba FC            Cidade: Campos
+Jogo 6: CA Azedos x CA Lagos            Cidade: Limões
+Jogo 7: SE Granada x Secretos FC        Cidade: Granada
 
 ---------- Rodada 10 ----------
-Jogo 1: SE Granada x Solaris RC	Cidade: Granada
-Jogo 2: Campos FC x Guardiões FC	Cidade: Campos
-Jogo 3: Portuários AA x SE Escondidos	Cidade: Porto
-Jogo 4: Secretos FC x Ferroviária EC	Cidade: Escondidos
-Jogo 5: CA Azedos x Simba FC	Cidade: Limões
-Jogo 6: CA Protetores x CA Lagos	Cidade: Guardião
-Jogo 7: SE Leões x Porto EC	Cidade: Leão
+Jogo 1: SE Granada x Solaris RC         Cidade: Granada
+Jogo 2: Campos FC x Guardiões FC        Cidade: Campos
+Jogo 3: Portuários AA x SE Escondidos   Cidade: Porto
+Jogo 4: Secretos FC x Ferroviária EC    Cidade: Escondidos
+Jogo 5: CA Azedos x Simba FC            Cidade: Limões
+Jogo 6: CA Protetores x CA Lagos        Cidade: Guardião
+Jogo 7: SE Leões x Porto EC             Cidade: Leão
 
 ---------- Rodada 11 ----------
-Jogo 1: CA Azedos x Guardiões FC	Cidade: Limões
-Jogo 2: SE Escondidos x Campos FC	Cidade: Escondidos
-Jogo 3: Ferroviária EC x Secretos FC	Cidade: Campos
-Jogo 4: CA Protetores x SE Granada	Cidade: Guardião
-Jogo 5: Portuários AA x SE Leões	Cidade: Porto
-Jogo 6: CA Lagos x Solaris RC	Cidade: Lagos
-Jogo 7: Simba FC x Porto EC	Cidade: Leão
+Jogo 1: CA Azedos x Guardiões FC        Cidade: Limões
+Jogo 2: SE Escondidos x Campos FC       Cidade: Escondidos
+Jogo 3: Ferroviária EC x Secretos FC    Cidade: Campos
+Jogo 4: CA Protetores x SE Granada      Cidade: Guardião
+Jogo 5: Portuários AA x SE Leões        Cidade: Porto
+Jogo 6: CA Lagos x Solaris RC           Cidade: Lagos
+Jogo 7: Simba FC x Porto EC             Cidade: Leão
 
 ---------- Rodada 12 ----------
-Jogo 1: CA Azedos x Porto EC	Cidade: Limões
-Jogo 2: SE Escondidos x SE Granada	Cidade: Escondidos
-Jogo 3: Simba FC x SE Leões	Cidade: Leão
-Jogo 4: Campos FC x Secretos FC	Cidade: Campos
-Jogo 5: Portuários AA x Guardiões FC	Cidade: Porto
-Jogo 6: CA Protetores x Solaris RC	Cidade: Guardião
-Jogo 7: CA Lagos x Ferroviária EC	Cidade: Lagos
+Jogo 1: CA Azedos x Porto EC            Cidade: Limões
+Jogo 2: SE Escondidos x SE Granada      Cidade: Escondidos
+Jogo 3: Simba FC x SE Leões             Cidade: Leão
+Jogo 4: Campos FC x Secretos FC         Cidade: Campos
+Jogo 5: Portuários AA x Guardiões FC    Cidade: Porto
+Jogo 6: CA Protetores x Solaris RC      Cidade: Guardião
+Jogo 7: CA Lagos x Ferroviária EC       Cidade: Lagos
 
 ---------- Rodada 13 ----------
-Jogo 1: Solaris RC x SE Escondidos	Cidade: Ponte-do-Sol
-Jogo 2: Secretos FC x SE Leões	Cidade: Escondidos
-Jogo 3: CA Lagos x CA Azedos	Cidade: Lagos
-Jogo 4: Ferroviária EC x Guardiões FC	Cidade: Campos
-Jogo 5: Simba FC x SE Granada	Cidade: Leão
-Jogo 6: CA Protetores x Porto EC	Cidade: Guardião
-Jogo 7: Portuários AA x Campos FC	Cidade: Porto
+Jogo 1: Solaris RC x SE Escondidos      Cidade: Ponte-do-Sol
+Jogo 2: Secretos FC x SE Leões          Cidade: Escondidos
+Jogo 3: CA Lagos x CA Azedos            Cidade: Lagos
+Jogo 4: Ferroviária EC x Guardiões FC   Cidade: Campos
+Jogo 5: Simba FC x SE Granada           Cidade: Leão
+Jogo 6: CA Protetores x Porto EC        Cidade: Guardião
+Jogo 7: Portuários AA x Campos FC       Cidade: Porto
 
 ---------- Rodada 14 ----------
-Jogo 1: Portuários AA x Simba FC	Cidade: Porto
-Jogo 2: SE Leões x Campos FC	Cidade: Leão
-Jogo 3: Secretos FC x SE Granada	Cidade: Escondidos
-Jogo 4: Solaris RC x Guardiões FC	Cidade: Ponte-do-Sol
-Jogo 5: CA Protetores x SE Escondidos	Cidade: Guardião
-Jogo 6: CA Lagos x Porto EC	Cidade: Lagos
-Jogo 7: Ferroviária EC x CA Azedos	Cidade: Campos
+Jogo 1: Portuários AA x Simba FC        Cidade: Porto
+Jogo 2: SE Leões x Campos FC            Cidade: Leão
+Jogo 3: Secretos FC x SE Granada        Cidade: Escondidos
+Jogo 4: Solaris RC x Guardiões FC       Cidade: Ponte-do-Sol
+Jogo 5: CA Protetores x SE Escondidos   Cidade: Guardião
+Jogo 6: CA Lagos x Porto EC             Cidade: Lagos
+Jogo 7: Ferroviária EC x CA Azedos      Cidade: Campos
 
 ---------- Rodada 15 ----------
-Jogo 1: SE Leões x CA Azedos	Cidade: Leão
-Jogo 2: Guardiões FC x Ferroviária EC	Cidade: Guardião
-Jogo 3: Campos FC x SE Granada	Cidade: Campos
-Jogo 4: Solaris RC x Secretos FC	Cidade: Ponte-do-Sol
-Jogo 5: CA Lagos x Simba FC	Cidade: Lagos
-Jogo 6: SE Escondidos x CA Protetores	Cidade: Escondidos
-Jogo 7: Portuários AA x Porto EC	Cidade: Porto
+Jogo 1: SE Leões x CA Azedos            Cidade: Leão
+Jogo 2: Guardiões FC x Ferroviária EC   Cidade: Guardião
+Jogo 3: Campos FC x SE Granada          Cidade: Campos
+Jogo 4: Solaris RC x Secretos FC        Cidade: Ponte-do-Sol
+Jogo 5: CA Lagos x Simba FC             Cidade: Lagos
+Jogo 6: SE Escondidos x CA Protetores   Cidade: Escondidos
+Jogo 7: Portuários AA x Porto EC        Cidade: Porto
 
 ---------- Rodada 16 ----------
-Jogo 1: Portuários AA x CA Lagos	Cidade: Porto
-Jogo 2: SE Escondidos x Guardiões FC	Cidade: Escondidos
-Jogo 3: CA Azedos x Secretos FC	Cidade: Limões
-Jogo 4: Campos FC x Solaris RC	Cidade: Campos
-Jogo 5: Simba FC x Ferroviária EC	Cidade: Leão
-Jogo 6: SE Granada x Porto EC	Cidade: Granada
-Jogo 7: CA Protetores x SE Leões	Cidade: Guardião
+Jogo 1: Portuários AA x CA Lagos        Cidade: Porto
+Jogo 2: SE Escondidos x Guardiões FC    Cidade: Escondidos
+Jogo 3: CA Azedos x Secretos FC         Cidade: Limões
+Jogo 4: Campos FC x Solaris RC          Cidade: Campos
+Jogo 5: Simba FC x Ferroviária EC       Cidade: Leão
+Jogo 6: SE Granada x Porto EC           Cidade: Granada
+Jogo 7: CA Protetores x SE Leões        Cidade: Guardião
 
 ---------- Rodada 17 ----------
-Jogo 1: Ferroviária EC x Porto EC	Cidade: Campos
-Jogo 2: Portuários AA x Solaris RC	Cidade: Porto
-Jogo 3: CA Lagos x Guardiões FC	Cidade: Lagos
-Jogo 4: CA Azedos x SE Escondidos	Cidade: Limões
-Jogo 5: Secretos FC x Simba FC	Cidade: Escondidos
-Jogo 6: CA Protetores x Campos FC	Cidade: Guardião
-Jogo 7: SE Leões x SE Granada	Cidade: Leão
+Jogo 1: Ferroviária EC x Porto EC       Cidade: Campos
+Jogo 2: Portuários AA x Solaris RC      Cidade: Porto
+Jogo 3: CA Lagos x Guardiões FC         Cidade: Lagos
+Jogo 4: CA Azedos x SE Escondidos       Cidade: Limões
+Jogo 5: Secretos FC x Simba FC          Cidade: Escondidos
+Jogo 6: CA Protetores x Campos FC       Cidade: Guardião
+Jogo 7: SE Leões x SE Granada           Cidade: Leão
 
 ---------- Rodada 18 ----------
-Jogo 1: Guardiões FC x Solaris RC	Cidade: Guardião
-Jogo 2: Campos FC x SE Escondidos	Cidade: Campos
-Jogo 3: SE Leões x Simba FC	Cidade: Leão
-Jogo 4: Porto EC x SE Granada	Cidade: Porto
-Jogo 5: CA Lagos x CA Protetores	Cidade: Lagos
-Jogo 6: CA Azedos x Ferroviária EC	Cidade: Limões
-Jogo 7: Secretos FC x Portuários AA	Cidade: Escondidos
+Jogo 1: Guardiões FC x Solaris RC       Cidade: Guardião
+Jogo 2: Campos FC x SE Escondidos       Cidade: Campos
+Jogo 3: SE Leões x Simba FC             Cidade: Leão
+Jogo 4: Porto EC x SE Granada           Cidade: Porto
+Jogo 5: CA Lagos x CA Protetores        Cidade: Lagos
+Jogo 6: CA Azedos x Ferroviária EC      Cidade: Limões
+Jogo 7: Secretos FC x Portuários AA     Cidade: Escondidos
 
 ---------- Rodada 19 ----------
-Jogo 1: SE Leões x Secretos FC	Cidade: Leão
-Jogo 2: SE Escondidos x Simba FC	Cidade: Escondidos
-Jogo 3: CA Protetores x CA Azedos	Cidade: Guardião
-Jogo 4: Ferroviária EC x Campos FC	Cidade: Campos
-Jogo 5: SE Granada x Portuários AA	Cidade: Granada
-Jogo 6: Porto EC x Guardiões FC	Cidade: Porto
-Jogo 7: Solaris RC x CA Lagos	Cidade: Ponte-do-Sol
+Jogo 1: SE Leões x Secretos FC          Cidade: Leão
+Jogo 2: SE Escondidos x Simba FC        Cidade: Escondidos
+Jogo 3: CA Protetores x CA Azedos       Cidade: Guardião
+Jogo 4: Ferroviária EC x Campos FC      Cidade: Campos
+Jogo 5: SE Granada x Portuários AA      Cidade: Granada
+Jogo 6: Porto EC x Guardiões FC         Cidade: Porto
+Jogo 7: Solaris RC x CA Lagos           Cidade: Ponte-do-Sol
 
 ---------- Rodada 20 ----------
-Jogo 1: Guardiões FC x Simba FC	Cidade: Guardião
-Jogo 2: Secretos FC x Campos FC	Cidade: Escondidos
-Jogo 3: SE Leões x SE Escondidos	Cidade: Leão
-Jogo 4: Porto EC x Portuários AA	Cidade: Porto
-Jogo 5: CA Lagos x SE Granada	Cidade: Lagos
-Jogo 6: Ferroviária EC x CA Protetores	Cidade: Campos
-Jogo 7: Solaris RC x CA Azedos	Cidade: Ponte-do-Sol
+Jogo 1: Guardiões FC x Simba FC         Cidade: Guardião
+Jogo 2: Secretos FC x Campos FC         Cidade: Escondidos
+Jogo 3: SE Leões x SE Escondidos        Cidade: Leão
+Jogo 4: Porto EC x Portuários AA        Cidade: Porto
+Jogo 5: CA Lagos x SE Granada           Cidade: Lagos
+Jogo 6: Ferroviária EC x CA Protetores  Cidade: Campos
+Jogo 7: Solaris RC x CA Azedos          Cidade: Ponte-do-Sol
 
 ---------- Rodada 21 ----------
-Jogo 1: Solaris RC x Simba FC	Cidade: Ponte-do-Sol
-Jogo 2: Guardiões FC x SE Granada	Cidade: Guardião
-Jogo 3: Portuários AA x CA Protetores	Cidade: Porto
-Jogo 4: CA Lagos x SE Escondidos	Cidade: Lagos
-Jogo 5: Campos FC x Porto EC	Cidade: Campos
-Jogo 6: Secretos FC x CA Azedos	Cidade: Escondidos
-Jogo 7: SE Leões x Ferroviária EC	Cidade: Leão
+Jogo 1: Solaris RC x Simba FC           Cidade: Ponte-do-Sol
+Jogo 2: Guardiões FC x SE Granada       Cidade: Guardião
+Jogo 3: Portuários AA x CA Protetores   Cidade: Porto
+Jogo 4: CA Lagos x SE Escondidos        Cidade: Lagos
+Jogo 5: Campos FC x Porto EC            Cidade: Campos
+Jogo 6: Secretos FC x CA Azedos         Cidade: Escondidos
+Jogo 7: SE Leões x Ferroviária EC       Cidade: Leão
 
 ---------- Rodada 22 ----------
-Jogo 1: Solaris RC x Ferroviária EC	Cidade: Ponte-do-Sol
-Jogo 2: Secretos FC x Guardiões FC	Cidade: Escondidos
-Jogo 3: CA Protetores x Simba FC	Cidade: Guardião
-Jogo 4: Porto EC x CA Azedos	Cidade: Porto
-Jogo 5: Campos FC x Portuários AA	Cidade: Campos
-Jogo 6: SE Granada x SE Escondidos	Cidade: Granada
-Jogo 7: SE Leões x CA Lagos	Cidade: Leão
+Jogo 1: Solaris RC x Ferroviária EC     Cidade: Ponte-do-Sol
+Jogo 2: Secretos FC x Guardiões FC      Cidade: Escondidos
+Jogo 3: CA Protetores x Simba FC        Cidade: Guardião
+Jogo 4: Porto EC x CA Azedos            Cidade: Porto
+Jogo 5: Campos FC x Portuários AA       Cidade: Campos
+Jogo 6: SE Granada x SE Escondidos      Cidade: Granada
+Jogo 7: SE Leões x CA Lagos             Cidade: Leão
 
 ---------- Rodada 23 ----------
-Jogo 1: Ferroviária EC x SE Escondidos	Cidade: Campos
-Jogo 2: Secretos FC x CA Protetores	Cidade: Escondidos
-Jogo 3: Guardiões FC x CA Azedos	Cidade: Guardião
-Jogo 4: SE Leões x Portuários AA	Cidade: Leão
-Jogo 5: CA Lagos x Campos FC	Cidade: Lagos
-Jogo 6: Porto EC x Simba FC	Cidade: Porto
-Jogo 7: Solaris RC x SE Granada	Cidade: Ponte-do-Sol
+Jogo 1: Ferroviária EC x SE Escondidos  Cidade: Campos
+Jogo 2: Secretos FC x CA Protetores     Cidade: Escondidos
+Jogo 3: Guardiões FC x CA Azedos        Cidade: Guardião
+Jogo 4: SE Leões x Portuários AA        Cidade: Leão
+Jogo 5: CA Lagos x Campos FC            Cidade: Lagos
+Jogo 6: Porto EC x Simba FC             Cidade: Porto
+Jogo 7: Solaris RC x SE Granada         Cidade: Ponte-do-Sol
 
 ---------- Rodada 24 ----------
-Jogo 1: Campos FC x Ferroviária EC	Cidade: Campos
-Jogo 2: Portuários AA x Secretos FC	Cidade: Porto
-Jogo 3: SE Granada x CA Protetores	Cidade: Granada
-Jogo 4: Simba FC x CA Lagos	Cidade: Leão
-Jogo 5: Guardiões FC x SE Leões	Cidade: Guardião
-Jogo 6: Solaris RC x Porto EC	Cidade: Ponte-do-Sol
-Jogo 7: SE Escondidos x CA Azedos	Cidade: Escondidos
+Jogo 1: Campos FC x Ferroviária EC      Cidade: Campos
+Jogo 2: Portuários AA x Secretos FC     Cidade: Porto
+Jogo 3: SE Granada x CA Protetores      Cidade: Granada
+Jogo 4: Simba FC x CA Lagos             Cidade: Leão
+Jogo 5: Guardiões FC x SE Leões         Cidade: Guardião
+Jogo 6: Solaris RC x Porto EC           Cidade: Ponte-do-Sol
+Jogo 7: SE Escondidos x CA Azedos       Cidade: Escondidos
 
 ---------- Rodada 25 ----------
-Jogo 1: CA Azedos x SE Leões	Cidade: Limões
-Jogo 2: Ferroviária EC x CA Lagos	Cidade: Campos
-Jogo 3: CA Protetores x Portuários AA	Cidade: Guardião
-Jogo 4: Simba FC x Campos FC	Cidade: Leão
-Jogo 5: Secretos FC x Solaris RC	Cidade: Escondidos
-Jogo 6: SE Granada x Guardiões FC	Cidade: Granada
-Jogo 7: Porto EC x SE Escondidos	Cidade: Porto
+Jogo 1: CA Azedos x SE Leões            Cidade: Limões
+Jogo 2: Ferroviária EC x CA Lagos       Cidade: Campos
+Jogo 3: CA Protetores x Portuários AA   Cidade: Guardião
+Jogo 4: Simba FC x Campos FC            Cidade: Leão
+Jogo 5: Secretos FC x Solaris RC        Cidade: Escondidos
+Jogo 6: SE Granada x Guardiões FC       Cidade: Granada
+Jogo 7: Porto EC x SE Escondidos        Cidade: Porto
 
 ---------- Rodada 26 ----------
-Jogo 1: Simba FC x SE Escondidos	Cidade: Leão
-Jogo 2: Portuários AA x Ferroviária EC	Cidade: Porto
-Jogo 3: Campos FC x SE Leões	Cidade: Campos
-Jogo 4: Solaris RC x CA Protetores	Cidade: Ponte-do-Sol
-Jogo 5: Guardiões FC x Porto EC	Cidade: Guardião
-Jogo 6: SE Granada x CA Azedos	Cidade: Granada
-Jogo 7: Secretos FC x CA Lagos	Cidade: Escondidos
+Jogo 1: Simba FC x SE Escondidos        Cidade: Leão
+Jogo 2: Portuários AA x Ferroviária EC  Cidade: Porto
+Jogo 3: Campos FC x SE Leões            Cidade: Campos
+Jogo 4: Solaris RC x CA Protetores      Cidade: Ponte-do-Sol
+Jogo 5: Guardiões FC x Porto EC         Cidade: Guardião
+Jogo 6: SE Granada x CA Azedos          Cidade: Granada
+Jogo 7: Secretos FC x CA Lagos          Cidade: Escondidos
 
