@@ -2,11 +2,11 @@
 Constroí uma tabela de rodadas e jogos dentro do arquivo table.txt, para iniciar basta ter Python3 instalado e rodar no modo debug.
 
 # O que é uma variável
-A variavel é a combinação da partida com a rodada.
-Exemplo: R0P0, R0P1, ..., R(i)P(j)
+A variavel é partida, i.e., a combinação da rodada com o jogo da rodada.
+Exemplo: R0P0, R0J1, ..., R(i)J(j)
 
-# Como se define o dominío do problema
-O dominío é todos os jogos do campeonato (uma tupla com timeA  e timeB).
+# Como se define o domínio do problema
+O domínio é todos os jogos do campeonato (uma tupla com timeA  e timeB).
 
 # Quais são as restrições do problema
 ## Restrições
