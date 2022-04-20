@@ -28,6 +28,7 @@ JOGOS = int(len(equipes)/2)
 
 # boolean que permite usar a mesma seed da ultima execucao que deu certo
 # (vai dar o mesmo resultado porém o tempo pode mudar se mudar de maquina)
+# se deixar como false ira pegar uma seed nova e bem provavelmente terá um resultado diferente
 USAR_ULTIMA_SEED = True 
 
 # gera combinação de todos os jogos
@@ -199,57 +200,57 @@ def gerar_jogos_classicos(qntd_maiores_times):
 # gera os dominios prevenindo ter cidades repetidas
 # quando há 2 apariçoes da mesma cidade significa que tera jogo dessa cidade em todas rodadas
 # quando ha apenas 1 ocorrencia é possivel juntar com outra cidade e separar os dominios
-# ja que nao pode repetir jogos
-def gerar_jogos_separados_cidades_exclusivas():
-  
+def gerar_dominios_por_conjunto_cidade():
+  # detecta as cidades e em quantos times ela repete
   cidades_ocorrencias = {}
-  aux_par = None
   for caracteristica in equipes.values():
     cidade = caracteristica["cidade"]
     if cidades_ocorrencias.get(cidade) != None:
       cidades_ocorrencias[cidade] += 1
     else:
       cidades_ocorrencias[cidade] = 1
-  
-  cidades_restricao_rodadas = []
-  par_cidades = []
+
+  cidades_dois_times = [] # guarda as cidades que tem em duas cidades
+  par_cidades = [] # para cidadas que so tem em um time
+  aux_par = None # auxilia o par_cidades guardando o nome da cidade com 1 ocorrencia
   for cidade, ocorrencias in cidades_ocorrencias.items():
     if ocorrencias > 2:
       print(f'Não é possível respeitar a condição de uma unica cidade na rodada.')
       print(f'Há {ocorrencias} ocorrências na cidade {cidade} totalizando {int(ocorrencias * (RODADAS / 2))} partidas nesse estádio.')
       print(f'Porém só tem {RODADAS} rodadas no campeonato.')
       return None, None
-    if ocorrencias == 2:
-      cidades_restricao_rodadas.append(cidade)
-    if ocorrencias == 1:
+    elif ocorrencias == 2:
+      cidades_dois_times.append(cidade)
+    elif ocorrencias == 1:
       if aux_par != None:
-        par = [aux_par, cidade]
+        par = [aux_par, cidade] # cria o conjunto de cidades que so tem um ocorrencia
         par_cidades.append(par)
         aux_par = None
       else:
         aux_par = cidade
-  shuffle(cidades_restricao_rodadas)
-  
-  jogos_sem_restricao_cidade_todas_rodadas = []
-  cidade_jogos = {}
-  for jogo in combinacao_de_todos_jogos:
-    cidade = equipes[jogo[0]]["cidade"]
-    if cidade in cidades_restricao_rodadas:
-      if cidade_jogos.get(cidade) != None:
-        cidade_jogos[cidade].append(jogo)
-      else:
-        cidade_jogos[cidade] = [jogo]
-    else:
-      for i in range(len(par_cidades)):
-        if cidade == par_cidades[i][0] or cidade == par_cidades[i][1]:
-          if len(jogos_sem_restricao_cidade_todas_rodadas) > i:
-            jogos = jogos_sem_restricao_cidade_todas_rodadas[i].copy()
-            jogos.append(jogo)
-            jogos_sem_restricao_cidade_todas_rodadas[i] = jogos
-          else:
-            jogos_sem_restricao_cidade_todas_rodadas.append([jogo])
+  shuffle(cidades_dois_times)
 
-  return jogos_sem_restricao_cidade_todas_rodadas, list(cidade_jogos.values())
+  cidades_dois_times_jogos = {}
+  par_cidade_jogos = {}
+  for i in range(len(combinacao_de_todos_jogos)):
+    jogo =  combinacao_de_todos_jogos[i]
+    cidade = equipes[jogo[0]]["cidade"]
+    
+    if cidades_dois_times_jogos.get(cidade) != None:
+      cidades_dois_times_jogos[cidade].append(jogo)
+    elif cidade in cidades_dois_times:
+      cidades_dois_times_jogos[cidade] = [jogo]
+    else:
+      for num_par in range(len(par_cidades)):
+        if cidade in par_cidades[num_par]:
+          variavel_par = 'par' + str(num_par)
+          if par_cidade_jogos.get(variavel_par) != None:
+            par_cidade_jogos[variavel_par].append(jogo)
+          else:
+            par_cidade_jogos[variavel_par] = [jogo]
+  dominios  = [*list(cidades_dois_times_jogos.values()), *list(par_cidade_jogos.values())]
+  
+  return dominios, len(cidades_dois_times)
 
 # define uma prioridade no dominio
 # no caso usamos os classicos para eles terem prioridades e evitar que a restricao sobrecarregue no final
@@ -259,115 +260,104 @@ def definir_prioridade(jogos, prioridade):
 
 
 def gerar_rodada_partida(qtd_partidas, qtd_rodadas):
-    rodadas_partidas = []
-    for i in range(1, qtd_rodadas + 1):
-        for j in range(1, qtd_partidas + 1):
-            rodadas_partidas.append(f"R{i}P{j}")
-    return rodadas_partidas
+  rodadas_partidas = []
+  for i in range(1, qtd_rodadas + 1):
+      for j in range(1, qtd_partidas + 1):
+          rodadas_partidas.append(f"R{i}P{j}")
+  return rodadas_partidas
 
 if __name__ == "__main__":
-    start_time = time.time()
-    linhas = ''
-    numero_semente = ''
-    if USAR_ULTIMA_SEED:
-      with open('static.txt', encoding='utf-8') as file:
-        linhas = file.read().split('\n')
-      numero_semente = float(linhas[0].split(' ')[1])
+  start_time = time.time()
+  linhas = ''
+  numero_semente = ''
+  if USAR_ULTIMA_SEED:
+    with open('static.txt', encoding='utf-8') as file:
+      linhas = file.read().split('\n')
+    numero_semente = float(linhas[0].split(' ')[1])
+  else:
+    numero_semente = start_time
+
+  # define a seed que sera usada ao longo do programa
+  seed(numero_semente)
+  
+  # define os argumentos que serao passados na instancia do backtracking
+  variaveis = []
+  dominios = {}
+  jogos_classicos = gerar_jogos_classicos(5)
+  dominios_conjunto_cidade, qntd_cidades_repetidas = gerar_dominios_por_conjunto_cidade()
+  
+  if dominios_conjunto_cidade != None:
+    for i in range(RODADAS): # rodadas
+      for j in range(JOGOS): # jogos
+        # Variável RnJm, tal que n é o número da rodada e m é o jogo da rodada
+        variavel = "R" + str(i) + "J" + str(j)
+        variaveis.append(variavel)
+        dominio = dominios_conjunto_cidade[j].copy()
+        shuffle(dominio)
+        dominio = definir_prioridade(dominio, jogos_classicos)
+        dominios[variavel] = dominio
+        
+    problema = SatisfacaoRestricoes(variaveis, dominios)
+
+    # Restricoes e filtros
+
+    # nao repete cidade 
+    problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_cidades_repetidas))
+    problema.adicionar_filtro_dominio(FiltraDominiosCidade(qntd_cidades_repetidas))
+    
+    # nao repete classico
+    problema.adicionar_restricao(NaoPodeClassicoNaMesmaRodada(variaveis, jogos_classicos))
+    problema.adicionar_filtro_dominio(FiltraDominiosClassicos(jogos_classicos))
+
+
+    # nao repete time na rodada
+    problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
+    problema.adicionar_filtro_dominio(FiltraDominiosMesmoTime())
+    
+    print("Contruindo tabela...")
+
+    resposta = problema.busca_backtracking()
+    respota_str = "TABELA DE JOGOS\n\n"
+    if resposta is None:
+      respota_str = "Nenhuma resposta encontrada\n"
     else:
-      numero_semente = start_time
+      rodadas = []
+      jogos_rodada = []
+      count_jogos_rodada = 0
+      
+      # atribui as rodadas em uma matriz e embaralha os dados entre rodadas (muda a ordem dos jogos da rodada e a ordem das rodadas)
+      for variavel in variaveis:
+        jogo = resposta[variavel]
+        jogos_rodada.append(jogo)
+        count_jogos_rodada += 1
+        if count_jogos_rodada == JOGOS:
+          count_jogos_rodada = 0
+          shuffle(jogos_rodada)
+          rodadas.append(jogos_rodada.copy())
+          jogos_rodada = []
+      shuffle(rodadas)
+      
+      for i in range(len(rodadas)): # rodadas
+        respota_str += "---------- Rodada " + str(i+1) + " ----------\n"
+        for j in range(len(rodadas[i])):
+          jogo = rodadas[i][j]
 
-    # define a seed que sera usada ao longo do programa
-    seed(numero_semente)
-    
-    # define os argumentos que serao passados na instancia do backtracking
-    variaveis = []
-    dominios = {}
-    jogos_classicos = gerar_jogos_classicos(5)
-    jogos_sem_restricao_cidade_todas_rodadas, jogos_restricao_cidade_todas_rodadas = gerar_jogos_separados_cidades_exclusivas()
-    
-    if jogos_sem_restricao_cidade_todas_rodadas != None and jogos_restricao_cidade_todas_rodadas != None:
-      qntd_restricoes_cidades = len(jogos_restricao_cidade_todas_rodadas)
-
-      for i in range(RODADAS): # rodadas
-        for j in range(JOGOS): # jogos
-          # Variável RnJm, tal que n é o número da rodada e m é o jogo da rodada
-          variavel = "R" + str(i) + "J" + str(j)
-          variaveis.append(variavel)
+          jogo_str = "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1]
           
-          if j < qntd_restricoes_cidades:
-            dominio = jogos_restricao_cidade_todas_rodadas[j].copy()
-            shuffle(dominio)
-            dominio = definir_prioridade(dominio, jogos_classicos)
-            dominios[variavel] = dominio
-          else:
-            index = j - qntd_restricoes_cidades
-            dominio = jogos_sem_restricao_cidade_todas_rodadas[index].copy()
-            
-            shuffle(dominio)
-            dominio = definir_prioridade(dominio, jogos_classicos)
-            dominios[variavel] = dominio
+          while len(jogo_str) < 40:
+            jogo_str += " "
 
-      problema = SatisfacaoRestricoes(variaveis, dominios)
+          jogo_str += "Cidade: " + equipes[jogo[0]]["cidade"] + '\n'
+          
+          respota_str += jogo_str
+        respota_str += '\n'
+    
+    with open('table.txt', 'w', encoding='utf-8') as file:
+      file.write(respota_str)
 
-      # Restricoes e filtros
-
-      # nao repete cidade 
-      problema.adicionar_restricao(NaoPodePatidaMesmaCidadeNaRodada(variaveis, qntd_restricoes_cidades))
-      problema.adicionar_filtro_dominio(FiltraDominiosCidade(qntd_restricoes_cidades))
-      
-      # nao repete classico
-      problema.adicionar_restricao(NaoPodeClassicoNaMesmaRodada(variaveis, jogos_classicos))
-      problema.adicionar_filtro_dominio(FiltraDominiosClassicos(jogos_classicos))
-
-
-      # nao repete time na rodada
-      problema.adicionar_restricao(NaoPodeTimeNaMesmaRodada(variaveis))
-      problema.adicionar_filtro_dominio(FiltraDominiosMesmoTime())
-      
-      print("Contruindo tabela...")
-
-      resposta = problema.busca_backtracking()
-      respota_str = "TABELA DE JOGOS\n\n"
-      if resposta is None:
-        respota_str = "Nenhuma resposta encontrada\n"
-      else:
-        rodadas = []
-        jogos_rodada = []
-        count_jogos_rodada = 0
-        
-        # atribui as rodadas em uma matriz e embaralha os dados entre rodadas (muda a ordem dos jogos da rodada e a ordem das rodadas)
-        for variavel in variaveis:
-          jogo = resposta[variavel]
-          jogos_rodada.append(jogo)
-          count_jogos_rodada += 1
-          if count_jogos_rodada == JOGOS:
-            count_jogos_rodada = 0
-            shuffle(jogos_rodada)
-            rodadas.append(jogos_rodada.copy())
-            jogos_rodada = []
-        shuffle(rodadas)
-        
-        for i in range(len(rodadas)): # rodadas
-          respota_str += "---------- Rodada " + str(i+1) + " ----------\n"
-          for j in range(len(rodadas[i])):
-            jogo = rodadas[i][j]
-
-            jogo_str = "Jogo " + str(j+1) + ": " + jogo[0] + " x " + jogo[1]
-            
-            while len(jogo_str) < 40:
-              jogo_str += " "
-
-            jogo_str += "Cidade: " + equipes[jogo[0]]["cidade"] + '\n'
-            
-            respota_str += jogo_str
-          respota_str += '\n'
-      
-      with open('table.txt', 'w', encoding='utf-8') as file:
-        file.write(respota_str)
-
-      tempo_duracao =  time.strftime("%H hora(s) e %M minuto(s) e %S segundo(s)", time.gmtime(time.time()-start_time))
-      new_static = "Seed: " + str(numero_semente) + "\nDemorou: " + tempo_duracao
-      with open('static.txt', 'w', encoding='utf-8') as file:
-        file.write(new_static)
-      
-      print("Demorou: ",tempo_duracao,end='\n')
+    tempo_duracao =  time.strftime("%H hora(s) e %M minuto(s) e %S segundo(s)", time.gmtime(time.time()-start_time))
+    new_static = "Seed: " + str(numero_semente) + "\nDemorou: " + tempo_duracao
+    with open('static.txt', 'w', encoding='utf-8') as file:
+      file.write(new_static)
+    
+    print("Demorou: ",tempo_duracao,end='\n')
