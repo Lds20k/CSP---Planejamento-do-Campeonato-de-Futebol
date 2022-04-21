@@ -45,11 +45,13 @@ class SatisfacaoRestricoes():
       # partida1[TIME_1] == partida2[TIME_1] or partida1[TIME_1] == partida2[TIME_2] or partida1[TIME_2] == partida2[TIME_2]
       rodadas = self.rodadas.copy()
       for partida_atribuicao in atribuicao.keys():
+        
         #  or partida_atribuicao[2] == partida[2]
         if (partida_atribuicao[0] == partida[0] or partida_atribuicao[0] == partida[1] or partida_atribuicao[1] == partida[0] or partida_atribuicao[1] == partida[1]) and atribuicao[partida_atribuicao] in rodadas:
           rodadas.remove(atribuicao[partida_atribuicao])
       # if partida not in atribuicao:
       self.dominios[partida] = rodadas
+
       # count += 1
       # print(count)
       # for partida in partidas:
