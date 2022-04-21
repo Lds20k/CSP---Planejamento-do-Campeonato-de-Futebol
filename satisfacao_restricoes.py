@@ -57,13 +57,11 @@ class SatisfacaoRestricoes():
 
   # MRV (Most Remaining Values) - Escolhe a variavel nao atribuida que contém menor dominio
   def escolher_menor_dominio(self, variaveis_nao_atribuida):
-    menor_tamanho_dominio = len(self.variaveis)
-    variavel_com_menor_dominio = None
-    for variavel, dominio in dict(self.dominios).items():
-      if variavel in variaveis_nao_atribuida and len(dominio) < menor_tamanho_dominio:
-        menor_tamanho_dominio = len(dominio)
-        variavel_com_menor_dominio = variavel
-    return variavel_com_menor_dominio
+    variavel_menor_dominio = variaveis_nao_atribuida[0]
+    for variavel in variaveis_nao_atribuida:
+      if len(self.dominios[variavel]) < len(self.dominios[variavel_menor_dominio]):
+        variavel_menor_dominio = variavel
+    return variavel_menor_dominio
 
   def busca_backtracking(self, atribuicao = {}):
     # retorna sucesso quando todas as variáveis forem atribuídas
